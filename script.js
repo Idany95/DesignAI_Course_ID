@@ -168,31 +168,24 @@
   }
 
   // ---- 4. Smooth Horizontal Scroll to Stall ----
-  function scrollToStall(elementId) {
+  function scrollToStall(elementId, inlinePos = "center") {
     const target = document.getElementById(elementId);
     if (target && aisleStrip) {
-      target.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+      target.scrollIntoView({ behavior: "smooth", block: "nearest", inline: inlinePos });
     }
   }
 
-  // Department Filter Clicks
+  // Department Filter Clicks (Also Triggers Full Mode Transformation)
   aisleBtns.forEach((btn) => {
     btn.addEventListener("click", function () {
-      aisleBtns.forEach((b) => b.classList.remove("is-active"));
-      btn.classList.add("is-active");
-
       const filter = btn.dataset.filter;
-      if (filter === "all") scrollToStall("item-hero");
-      else if (filter === "code") scrollToStall("item-code");
-      else if (filter === "design") scrollToStall("item-design");
-      else if (filter === "mix") scrollToStall("item-mix");
-      else if (filter === "somatic") scrollToStall("item-somatic");
-      else if (filter === "recall") scrollToStall("item-recall");
+      if (filter === "all") applyTransformation("initial");
+      else applyTransformation(filter);
     });
   });
 
   if (manifestoOpenBtn) {
-    manifestoOpenBtn.addEventListener("click", () => scrollToStall("item-manifesto"));
+    manifestoOpenBtn.addEventListener("click", () => applyTransformation("manifesto"));
   }
 
   // Wheel horizontal scrolling (convert vertical mousewheel to horizontal aisle scroll)
@@ -206,45 +199,47 @@
   }
 
   // ---- 5. Transformation Engine (Showing Adaptability on Demand) ----
+  const screenBurst = document.getElementById("screenBurst");
+
   const STATE_DESCRIPTIONS = {
     initial: {
-      toast: "↺ איפוס: האתר חזר למצב בסיס — זהות מאוזנת ופתוחה",
+      toast: "↺ איפוס: האתר חזר למצב בסיס — מכולת בוטיק ארטיזנלית",
       status: "מצב: שניהם ואף אחד מהם (BOTH & NEITHER)",
       audio: "chime",
       targetId: "item-hero"
     },
     code: {
-      toast: "⚡ שבירה למצב קוד: האתר עבר לתצורת מסוף האקרים דטרמיניסטי",
+      toast: "⚡ שבירה למצב קוד: מסוף האקרים דטרמיניסטי מלא (IDE & CRT)",
       status: "מצב: מהנדס תוכנה — 100% דטרמיניזם וקוד נקי",
       audio: "code",
       targetId: "item-code"
     },
     design: {
-      toast: "📐 שבירה למצב שוויצרי: פינות חדות 0px, טיפוגרפיה רדיקלית ומבנה מודרניסטי",
+      toast: "📐 שבירה למצב שוויצרי: 0px רדיוס, טיפוגרפיה רדיקלית וגריד ציריך 1957",
       status: "מצב: מעצב שוויצרי — גריד קפדני, 0px רדיוס, טיפוגרפיה שיטתית",
       audio: "design",
       targetId: "item-design"
     },
     mix: {
-      toast: "✦ שבירה לסופרפוזיציה: האתר במיקס מלא — מהנדס ומעצב בעת ובעונה אחת",
+      toast: "✦ שבירה לסופרפוזיציה: זוהר קוונטי והולוגרפי — גם וגם בו-זמנית",
       status: "מצב: סופרפוזיציה — גם וגם ואף אחד מהם בו-זמנית",
       audio: "mix",
       targetId: "item-mix"
     },
     somatic: {
-      toast: "🎾 שבירה סומטית: גופניות מתפרצת, כדור טניס וצבע חי בלתי צפוי",
+      toast: "🎾 שבירה סומטית: אנרכיית פאנק, כרטיסים עקומים וחבטת טניס 150 קמ״ש",
       status: "מצב: שבירה סומטית — צבע, טניס 150 קמ״ש, חומר חי וסאונד",
       audio: "tennis",
       targetId: "item-somatic"
     },
     recall: {
-      toast: "🚫 שבירה להסגר: תבניות ה-AI הסטנדרטיות הוכנסו להסגר מיידי",
+      toast: "🚫 שבירה להסגר: כוננות חירום DEFCON 1 נגד שבלונות ה-AI",
       status: "מצב: הסגר טופסולוגי — סירוב מוחלט לשבלונות AI",
       audio: "stamp",
       targetId: "item-recall"
     },
     manifesto: {
-      toast: "📖 שבירה למניפסט: האתר ממוקד בטקסט העמדה והאידיאולוגיה",
+      toast: "📖 שבירה למניפסט: זרקור מוזיאלי ממוקד על מסת העמדה והאידיאולוגיה",
       status: "מצב: מניפסט עיוני — קריאה מעמיקה בעמדת המעצב",
       audio: "chime",
       targetId: "item-manifesto"
@@ -254,6 +249,14 @@
   const ALL_STATES = ["state-code", "state-design", "state-mix", "state-somatic", "state-recall", "state-manifesto"];
 
   function applyTransformation(mode) {
+    // 0. Screen Shockwave Flash
+    if (screenBurst) {
+      screenBurst.classList.add("is-firing");
+      setTimeout(() => {
+        screenBurst.classList.remove("is-firing");
+      }, 70);
+    }
+
     // 1. Remove previous state classes
     document.body.classList.remove(...ALL_STATES);
 
@@ -276,11 +279,30 @@
       if (toastTimer) clearTimeout(toastTimer);
       toastTimer = setTimeout(() => {
         transformToast.classList.remove("is-visible");
-      }, 2800);
+      }, 3400);
     }
 
     // 5. Play corresponding audio
     playAudio(stateConfig.audio);
+
+    // 6. Smoothly center the expanded focus stall in viewport
+    if (stateConfig.targetId) {
+      setTimeout(() => {
+        scrollToStall(stateConfig.targetId, "center");
+      }, 80);
+    }
+
+    // 7. Sync navigation bar active pill
+    if (aisleBtns) {
+      aisleBtns.forEach((b) => {
+        const filter = b.dataset.filter;
+        if ((filter === "all" && (mode === "initial" || !mode)) || filter === mode) {
+          b.classList.add("is-active");
+        } else {
+          b.classList.remove("is-active");
+        }
+      });
+    }
   }
 
   // Hook all block transform buttons

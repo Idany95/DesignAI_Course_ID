@@ -66,43 +66,61 @@ html, body {
 /* Real-Time Transformation Toast */
 .transform-toast {
   position: fixed;
-  top: 64px;
+  top: 68px;
   left: 50%;
-  transform: translateX(-50%) translateY(-20px);
+  transform: translateX(-50%) translateY(-25px) scale(0.92);
   background: var(--ink);
   color: var(--bg-market);
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 700;
-  padding: 6px 16px;
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 800;
+  padding: 8px 22px;
   border-radius: 999px;
-  z-index: 150;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 180;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+  border: 2px solid currentColor;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   opacity: 0;
   pointer-events: none;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
 }
 
 .transform-toast.is-visible {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translateX(-50%) translateY(0) scale(1);
 }
 
 .toast-indicator {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--tennis-lime);
   display: inline-block;
-  animation: pulseToast 1.5s infinite;
+  animation: pulseToast 1.2s infinite;
+  box-shadow: 0 0 8px currentColor;
 }
 
 @keyframes pulseToast {
   0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.4); opacity: 0.5; }
+  50% { transform: scale(1.5); opacity: 0.6; }
+}
+
+/* Screen Shockwave / Burst Overlay on Transformation */
+.screen-burst {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0;
+  background: #ffffff;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.screen-burst.is-firing {
+  opacity: 0.55;
+  transition: none;
 }
 
 /* Master Viewport Frame */
@@ -1039,137 +1057,566 @@ html, body {
 }
 
 /* ==========================================================================
-   4. TRANSFORMATION MODES (SHOWING TOTAL ADAPTABILITY ON BUTTON CLICK!)
+   4. RADICAL TRANSFORMATION MODES (MASSIVE UNMISTAKABLE SITE OVERHAUL)
    ========================================================================== */
 
-/* Mode 1: Code Mode (Terminal / Hacker IDE) */
+/* --------------------------------------------------------------------------
+   MODE 1: CODE MODE (COMPLETE CRT / HACKER TERMINAL / CYBERPUNK IDE TAKEOVER)
+   -------------------------------------------------------------------------- */
 body.state-code {
-  --bg-market: #080b0f;
-  --bg-card: #0d1117;
-  --bg-card-subtle: #161b22;
-  --ink: #00ff66;
-  --ink-muted: #58a6ff;
-  --rule: rgba(0, 255, 102, 0.15);
-  --danger-red: #ff7b72;
+  --bg-market: #030804 !important;
+  --bg-card: #060e07 !important;
+  --bg-card-subtle: #0a170c !important;
+  --ink: #00ff66 !important;
+  --ink-muted: #2ea043 !important;
+  --rule: rgba(0, 255, 102, 0.25) !important;
+  --radius-card: 2px !important;
+  background-color: #030804 !important;
+  color: #00ff66 !important;
 }
 
-body.state-code .brand-badge {
-  background: #00ff66;
-  color: #000000;
-}
-
-body.state-code .product-stall {
-  box-shadow: 4px 4px 0 rgba(0, 255, 102, 0.4);
+body.state-code,
+body.state-code * {
+  font-family: "JetBrains Mono", Menlo, Consolas, "Courier New", monospace !important;
 }
 
 body.state-code .market-viewport {
+  background-color: #030804 !important;
   background-image:
-    linear-gradient(to bottom, rgba(0, 255, 102, 0.1) 1px, transparent 1px),
-    linear-gradient(to left, rgba(0, 255, 102, 0.1) 1px, transparent 1px);
+    radial-gradient(circle at center, rgba(0, 40, 15, 0.9) 0%, rgba(2, 6, 3, 0.98) 100%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0px, rgba(0, 0, 0, 0.8) 2px, rgba(0, 255, 102, 0.08) 2px, rgba(0, 255, 102, 0.08) 4px) !important;
+  box-shadow: inset 0 0 80px rgba(0, 255, 102, 0.25) !important;
 }
 
-/* Mode 2: Swiss Design Mode (Pure Müller-Brockmann White & Crimson) */
+body.state-code .storefront-bar,
+body.state-code .storefront-footer {
+  background: #020603 !important;
+  border-color: #00ff66 !important;
+  color: #00ff66 !important;
+}
+
+body.state-code .brand-badge {
+  background: #00ff66 !important;
+  color: #000000 !important;
+  box-shadow: 0 0 10px #00ff66 !important;
+}
+
+body.state-code .brand-title {
+  color: #00ff66 !important;
+  text-shadow: 0 0 8px rgba(0, 255, 102, 0.7) !important;
+}
+
+body.state-code .status-pill {
+  background: #011f0a !important;
+  border: 1px solid #00ff66 !important;
+  color: #00ff66 !important;
+  box-shadow: 0 0 14px rgba(0, 255, 102, 0.4) !important;
+}
+
+body.state-code .status-dot {
+  background: #00ff66 !important;
+  box-shadow: 0 0 8px #00ff66 !important;
+}
+
+body.state-code .aisle-btn {
+  border: 1px solid #00ff66 !important;
+  color: #00ff66 !important;
+  background: transparent !important;
+}
+
+body.state-code .aisle-btn.is-active,
+body.state-code .aisle-btn:hover {
+  background: #00ff66 !important;
+  color: #000000 !important;
+  box-shadow: 0 0 10px #00ff66 !important;
+}
+
+body.state-code .product-stall {
+  background: #060e07 !important;
+  border: 2px solid #00ff66 !important;
+  box-shadow: 0 0 20px rgba(0, 255, 102, 0.25), 4px 4px 0 #000 !important;
+  color: #00ff66 !important;
+  border-radius: 2px !important;
+}
+
+body.state-code .stall-headline,
+body.state-code .stall-title,
+body.state-code .product-ref,
+body.state-code .product-stall p {
+  color: #00ff66 !important;
+  text-shadow: 0 0 6px rgba(0, 255, 102, 0.5) !important;
+}
+
+body.state-code .buy-btn {
+  background: #00ff66 !important;
+  color: #000000 !important;
+  border: 1px solid #00ff66 !important;
+  box-shadow: 0 0 15px rgba(0, 255, 102, 0.6) !important;
+  font-weight: 900 !important;
+  border-radius: 2px !important;
+}
+
+/* Focused Stall Expansion */
+body.state-code #item-code {
+  flex: 0 0 clamp(540px, 48vw, 760px) !important;
+  border: 3px solid #00ff66 !important;
+  box-shadow: 0 0 60px rgba(0, 255, 102, 0.75), inset 0 0 25px rgba(0, 255, 102, 0.2) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   MODE 2: SWISS DESIGN (PURE CONSTRUCTIVIST ZURICH 1957 / ZERO RADIUS / RED)
+   -------------------------------------------------------------------------- */
 body.state-design {
-  --bg-market: #ffffff;
-  --bg-card: #ffffff;
-  --bg-card-subtle: #f4f4f4;
-  --ink: #000000;
-  --ink-muted: #555555;
-  --rule: rgba(0, 0, 0, 0.22);
-  --tennis-lime: #e60000;
-  --radius-card: 0px; /* STRICT 0PX SHARP EDGES */
+  --bg-market: #ffffff !important;
+  --bg-card: #ffffff !important;
+  --bg-card-subtle: #f2f2f2 !important;
+  --ink: #000000 !important;
+  --ink-muted: #333333 !important;
+  --rule: #000000 !important;
+  --radius-card: 0px !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
 }
 
-body.state-design .product-stall {
-  border-radius: 0;
-  box-shadow: 6px 6px 0 #000000;
-}
-
-body.state-design .buy-btn,
-body.state-design .tool-btn,
-body.state-design .brand-badge,
-body.state-design .product-tag {
-  border-radius: 0;
+body.state-design,
+body.state-design * {
+  border-radius: 0 !important;
+  font-family: "Helvetica Neue", Arial, sans-serif !important;
 }
 
 body.state-design .market-viewport {
+  background-color: #ffffff !important;
   background-image:
-    linear-gradient(to bottom, rgba(230, 0, 0, 0.18) 1px, transparent 1px),
-    linear-gradient(to left, rgba(0, 0, 0, 0.22) 1px, transparent 1px);
+    linear-gradient(to bottom, rgba(230, 0, 0, 0.38) 1.5px, transparent 1.5px),
+    linear-gradient(to left, rgba(0, 0, 0, 0.28) 1.5px, transparent 1.5px) !important;
+  background-size: 100% 28px, calc(100% / 12) 100% !important;
 }
 
-/* Mode 3: The Quantum Mix Mode */
+body.state-design .storefront-bar,
+body.state-design .storefront-footer {
+  background: #ffffff !important;
+  border-bottom: 4px solid #000000 !important;
+  border-top: 4px solid #000000 !important;
+  color: #000000 !important;
+}
+
+body.state-design .brand-badge {
+  background: #e60000 !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  border: 2px solid #000000 !important;
+}
+
+body.state-design .brand-title {
+  color: #000000 !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.04em !important;
+  text-transform: uppercase !important;
+}
+
+body.state-design .status-pill {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  box-shadow: 3px 3px 0 #000000 !important;
+}
+
+body.state-design .status-dot {
+  background: #e60000 !important;
+}
+
+body.state-design .aisle-btn {
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+body.state-design .aisle-btn.is-active,
+body.state-design .aisle-btn:hover {
+  background: #e60000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+body.state-design .product-stall {
+  background: #ffffff !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 10px 10px 0 #000000 !important;
+  color: #000000 !important;
+}
+
+body.state-design .stall-headline,
+body.state-design .stall-title {
+  text-transform: uppercase !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+  color: #000000 !important;
+}
+
+body.state-design .buy-btn {
+  background: #e60000 !important;
+  color: #ffffff !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 5px 5px 0 #000000 !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+}
+
+/* Focused Stall Expansion */
+body.state-design #item-design {
+  flex: 0 0 clamp(540px, 48vw, 760px) !important;
+  border: 4px solid #e60000 !important;
+  box-shadow: 16px 16px 0 #000000, 16px 16px 0 4px #e60000 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   MODE 3: THE QUANTUM MIX (ANIMATED AURORA GRADIENT / HOLOGRAPHIC SUPERPOSITION)
+   -------------------------------------------------------------------------- */
 body.state-mix {
-  --bg-market: #fbf7ee;
-  --bg-card: #ffffff;
-  --ink: #111111;
-  --rule: rgba(255, 51, 136, 0.25);
+  --bg-market: #0a0518 !important;
+  --bg-card: rgba(255, 255, 255, 0.08) !important;
+  --bg-card-subtle: rgba(255, 255, 255, 0.05) !important;
+  --ink: #ffffff !important;
+  --ink-muted: #b8c1ec !important;
+  --rule: rgba(255, 255, 255, 0.22) !important;
+  background-color: #0a0518 !important;
+  color: #ffffff !important;
 }
 
-body.state-mix .stall--mix {
-  box-shadow: 0 0 24px rgba(212, 255, 0, 0.6), 6px 6px 0 #000;
-  border-color: #000;
+body.state-mix .market-viewport {
+  background: linear-gradient(135deg, #0d001a 0%, #1f003b 25%, #001f3f 50%, #3a0033 75%, #0d001a 100%) !important;
+  background-size: 300% 300% !important;
+  animation: quantumGradient 10s ease infinite alternate !important;
 }
 
-/* Mode 4: Somatic Punk Shock (Tennis Ball Impact!) */
+@keyframes quantumGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body.state-mix .storefront-bar,
+body.state-mix .storefront-footer {
+  background: rgba(12, 6, 26, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+
+body.state-mix .brand-badge {
+  background: linear-gradient(90deg, #ff0080, #7928ca, #00dfd8) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 0 15px rgba(255, 0, 128, 0.5) !important;
+}
+
+body.state-mix .brand-title {
+  color: #ffffff !important;
+  text-shadow: 2px 0 #ff007f, -2px 0 #00f0ff !important;
+}
+
+body.state-mix .status-pill {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.4) !important;
+}
+
+body.state-mix .status-dot {
+  background: #00dfd8 !important;
+  box-shadow: 0 0 10px #00dfd8 !important;
+}
+
+body.state-mix .product-stall {
+  background: rgba(25, 12, 45, 0.65) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 2px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 10px 35px rgba(255, 0, 128, 0.35), 0 0 15px rgba(0, 240, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+
+body.state-mix .stall-headline {
+  text-shadow: 2.5px 0 #ff007f, -2.5px 0 #00f0ff !important;
+  color: #ffffff !important;
+}
+
+body.state-mix .stall-lead,
+body.state-mix .product-stall p {
+  color: #f0f0ff !important;
+}
+
+body.state-mix .buy-btn {
+  background: linear-gradient(135deg, #ff0080, #7928ca, #0070f3) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 0 25px rgba(255, 0, 128, 0.6) !important;
+  font-weight: 800 !important;
+}
+
+/* Focused Stall Expansion */
+body.state-mix #item-mix {
+  flex: 0 0 clamp(540px, 48vw, 760px) !important;
+  border: 3px solid #ff0080 !important;
+  box-shadow: 0 0 70px rgba(255, 0, 128, 0.75), 0 0 35px rgba(0, 240, 255, 0.6) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   MODE 4: SOMATIC PUNK SHOCK (ACID TENNIS YELLOW / VIOLENT ROTATIONS / PUNK)
+   -------------------------------------------------------------------------- */
 body.state-somatic {
-  --bg-market: #fff9e6;
-  --ink: #1a0033;
+  --bg-market: #fae100 !important;
+  --bg-card: #ffffff !important;
+  --ink: #110022 !important;
+  background-color: #fae100 !important;
+  color: #110022 !important;
 }
 
-body.state-somatic .product-stall:nth-child(odd) {
-  transform: rotate(-1.5deg) translateY(-2px);
+body.state-somatic .market-viewport {
+  background-color: #fae100 !important;
+  background-image:
+    radial-gradient(#ff007f 16%, transparent 17%),
+    radial-gradient(#00d4ff 16%, transparent 17%) !important;
+  background-size: 40px 40px !important;
+  background-position: 0 0, 20px 20px !important;
 }
 
-body.state-somatic .product-stall:nth-child(even) {
-  transform: rotate(2deg) translateY(4px);
+body.state-somatic .storefront-bar,
+body.state-somatic .storefront-footer {
+  background: #fae100 !important;
+  border-bottom: 4px solid #000000 !important;
+  border-top: 4px solid #000000 !important;
+  color: #000000 !important;
+}
+
+body.state-somatic .brand-badge {
+  background: #ff007f !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+  transform: rotate(-3deg);
+}
+
+body.state-somatic .brand-title {
+  color: #ff007f !important;
+  text-shadow: 2px 2px 0 #000000 !important;
+  transform: rotate(-1.5deg);
+}
+
+/* Violent Anarchic Rotations across all Stalls */
+body.state-somatic .product-stall:nth-child(1) { transform: rotate(-4.5deg) translateY(-14px) scale(0.96) !important; }
+body.state-somatic .product-stall:nth-child(2) { transform: rotate(5deg) translateY(14px) scale(1.02) !important; }
+body.state-somatic .product-stall:nth-child(3) { transform: rotate(-3.5deg) translateY(-6px) !important; }
+body.state-somatic .product-stall:nth-child(4) { transform: rotate(4.2deg) translateY(12px) !important; }
+body.state-somatic .product-stall:nth-child(5) { transform: scale(1.08) rotate(0deg) !important; z-index: 50 !important; }
+body.state-somatic .product-stall:nth-child(6) { transform: rotate(-5deg) translateY(-10px) !important; }
+body.state-somatic .product-stall:nth-child(7) { transform: rotate(4deg) translateY(8px) !important; }
+
+body.state-somatic .product-stall {
+  background: #ffffff !important;
+  border: 4px solid #000000 !important;
+  box-shadow: 12px 12px 0 #ff007f, 12px 12px 0 3px #000000 !important;
+  color: #000000 !important;
+}
+
+body.state-somatic .stall-headline {
+  color: #ff007f !important;
+  text-shadow: 3px 3px 0 #000000 !important;
+  transform: rotate(-2deg);
 }
 
 body.state-somatic .felt-ball {
-  animation: ballBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: feltSuperBounce 0.5s infinite alternate cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
 
-@keyframes ballBounce {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.4) rotate(20deg); }
-  100% { transform: scale(1); }
+@keyframes feltSuperBounce {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-35px) scale(1.3) rotate(15deg); }
+  100% { transform: translateY(0) scale(0.95); }
 }
 
-/* Mode 5: Recall Mode (Hazard Alert) */
+body.state-somatic .buy-btn {
+  background: #ff007f !important;
+  color: #ffffff !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 6px 6px 0 #000000 !important;
+  transform: rotate(-2deg);
+  font-weight: 900 !important;
+}
+
+/* Focused Stall Expansion */
+body.state-somatic #item-somatic {
+  flex: 0 0 clamp(540px, 48vw, 760px) !important;
+  border: 5px solid #000000 !important;
+  box-shadow: 16px 16px 0 #d4ff00, 16px 16px 0 4px #000000 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   MODE 5: RECALL MODE (DEFCON 1 HAZARD / RED ALERT / TOTAL AI QUARANTINE)
+   -------------------------------------------------------------------------- */
 body.state-recall {
-  --bg-market: #fff1f2;
-  --ink: #990000;
-  --rule: rgba(230, 57, 70, 0.25);
+  --bg-market: #2b0004 !important;
+  --bg-card: #fff0f2 !important;
+  --ink: #900000 !important;
+  background-color: #2b0004 !important;
+  color: #900000 !important;
+}
+
+body.state-recall .market-viewport {
+  background: repeating-linear-gradient(-45deg, #2b0004, #2b0004 25px, #1a0002 25px, #1a0002 50px) !important;
+  box-shadow: inset 0 0 110px rgba(255, 0, 50, 0.85) !important;
+  animation: hazardSirenPulse 1.2s infinite alternate !important;
+}
+
+@keyframes hazardSirenPulse {
+  0% { box-shadow: inset 0 0 50px rgba(255, 0, 50, 0.4); }
+  100% { box-shadow: inset 0 0 110px rgba(255, 0, 50, 0.95); }
 }
 
 body.state-recall .storefront-bar,
 body.state-recall .storefront-footer {
-  background: repeating-linear-gradient(
-    -45deg,
-    #fff1f2,
-    #fff1f2 10px,
-    #ffe4e6 10px,
-    #ffe4e6 20px
-  );
+  background: repeating-linear-gradient(45deg, #ffd000, #ffd000 20px, #000000 20px, #000000 40px) !important;
+  color: #000000 !important;
+  border-color: #ff0033 !important;
+  font-weight: 900 !important;
 }
 
-body.state-recall .stall--recall {
-  box-shadow: 0 0 20px rgba(230, 57, 70, 0.6), 6px 6px 0 #990000;
+body.state-recall .brand-title,
+body.state-recall .storefront-tools * {
+  color: #000000 !important;
+  font-weight: 900 !important;
 }
 
-/* Mode 6: Manifesto Reading Mode */
+body.state-recall .status-pill {
+  background: #ff0033 !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 0 0 20px #ff0033 !important;
+}
+
+body.state-recall .product-stall {
+  background: #fff5f5 !important;
+  border: 3px solid #cc0000 !important;
+  box-shadow: 10px 10px 0 #800000 !important;
+  position: relative;
+}
+
+body.state-recall .product-stall::after {
+  content: "REJECTED BY DESIGNER";
+  position: absolute;
+  top: 38%;
+  left: 6%;
+  transform: rotate(-22deg);
+  font-size: 26px;
+  font-weight: 900;
+  color: rgba(204, 0, 0, 0.38);
+  border: 4px dashed rgba(204, 0, 0, 0.45);
+  padding: 6px 14px;
+  pointer-events: none;
+  z-index: 10;
+  letter-spacing: 0.05em;
+}
+
+body.state-recall .buy-btn {
+  background: #cc0000 !important;
+  color: #ffffff !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 5px 5px 0 #000000 !important;
+  font-weight: 900 !important;
+}
+
+/* Focused Stall Expansion */
+body.state-recall #item-recall {
+  flex: 0 0 clamp(540px, 48vw, 760px) !important;
+  border: 5px solid #ff0000 !important;
+  box-shadow: 0 0 60px rgba(255, 0, 0, 0.9), 14px 14px 0 #000000 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   MODE 6: MANIFESTO MODE (MUSEUM EXHIBITION SPOTLIGHT / LITURGICAL ESSAY)
+   -------------------------------------------------------------------------- */
 body.state-manifesto {
-  --bg-market: #eae5d9;
-  --bg-card: #f7f5ed;
-  --ink: #1e1b18;
+  --bg-market: #14110e !important;
+  --bg-card: #f9f6ef !important;
+  --ink: #1e1b18 !important;
+  background-color: #14110e !important;
+  color: #1e1b18 !important;
 }
 
-body.state-manifesto .stall--manifesto {
-  box-shadow: 0 0 30px rgba(91, 43, 130, 0.35), 8px 8px 0 #1e1b18;
-  border-color: var(--rhino);
+body.state-manifesto .market-viewport {
+  background: radial-gradient(circle at 75% 50%, rgba(55, 45, 32, 0.85) 0%, #120f0d 100%) !important;
 }
 
-/* Responsive */
+body.state-manifesto .storefront-bar,
+body.state-manifesto .storefront-footer {
+  background: #1c1814 !important;
+  border-color: #3d3429 !important;
+  color: #f5eedc !important;
+}
+
+body.state-manifesto .brand-title {
+  color: #f5eedc !important;
+}
+
+body.state-manifesto .status-pill {
+  background: #2b2219 !important;
+  border: 1px solid #d4af37 !important;
+  color: #d4af37 !important;
+}
+
+/* Dim all stalls except Manifesto */
+body.state-manifesto .product-stall:not(#item-manifesto) {
+  opacity: 0.22 !important;
+  filter: grayscale(1) blur(0.5px) !important;
+  transition: all 0.5s ease;
+}
+
+/* Focused Manifesto Vitrine Spotlight */
+body.state-manifesto #item-manifesto {
+  flex: 0 0 clamp(620px, 60vw, 900px) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  background: #fffdf7 !important;
+  border: 3px solid #d4af37 !important;
+  box-shadow: 0 0 90px rgba(255, 235, 180, 0.4), 0 25px 60px rgba(0, 0, 0, 0.85) !important;
+  color: #1a1612 !important;
+}
+
+body.state-manifesto #item-manifesto * {
+  font-family: Georgia, "Times New Roman", Garamond, serif !important;
+}
+
+body.state-manifesto .essay-text {
+  font-size: 14.5px !important;
+  line-height: 1.75 !important;
+  color: #1a1612 !important;
+}
+
+body.state-manifesto .essay-text p:first-of-type::first-letter {
+  font-size: 40px !important;
+  float: right;
+  margin-left: 10px;
+  line-height: 1;
+  font-weight: 900;
+  color: #8a6d25;
+}
+
+body.state-manifesto .buy-btn {
+  background: #2b2219 !important;
+  color: #f5eedc !important;
+  border: 2px solid #d4af37 !important;
+  font-weight: 700 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
 @media (max-width: 900px) {
   .product-stall {
     flex: 0 0 clamp(300px, 82vw, 380px);
@@ -1178,3 +1625,4 @@ body.state-manifesto .stall--manifesto {
     display: none;
   }
 }
+
