@@ -2,24 +2,26 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>עידן ירחי — מכולת ירחי / YARCHI MARKET : מפרט מוצר היברידי</title>
-  <meta name="description" content="עידן ירחי כמוצר קונספטואלי במכולת זהות: הנדסת תוכנה, עיצוב UI/UX, והמיקס. לא רק זה ולא רק זה — שניהם ואף אחד מהם בו-זמנית. ללא גלילה אנכית, עם טרנספורמציה מלאה בכל לחיצה." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>עידן ירחי — CHOOSE YOUR IDAN : בחר את העידן שלך</title>
+  <meta name="description" content="עידן ירחי — CHOOSE YOUR IDAN. לוח בחירת דמות אינטראקטיבי: מהנדס תוכנה, מעצב שוויצרי, וכור ההיתוך. לא רק זה ולא רק זה — שניהם ואף אחד מהם בו-זמנית. ללא גלילה אנכית, עם טרנספורמציה מלאה בכל בחירה." />
+
+  <!-- Google Fonts: Rubik + IBM Plex Sans Hebrew + Space Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Caveat:wght@600;700&family=Heebo:wght@400;600;800;900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=Inter:wght@400;600;700&family=Rubik:ital,wght@0,500;0,700;0,900;1,900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect fill='%231a1a1a' width='16' height='16' rx='4'/><circle cx='8' cy='8' r='5' fill='%23d4ff00'/><text x='8' y='11' font-size='8' text-anchor='middle' fill='%231a1a1a' font-family='sans-serif' font-weight='900'>Y</text></svg>" />
-</head>
-<body class="market-body state-initial">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans+Hebrew:wght@400;500;700;800;900&family=Rubik:ital,wght@0,400;0,700;0,900;1,900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
-  <!-- Grain & Boutique Texture Overlay -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="state-initial">
+
+  <!-- Grain & Console Texture Overlay -->
   <div class="market-grain" aria-hidden="true"></div>
 
   <!-- Real-time Transformation Toast Feedback -->
   <div class="transform-toast" id="transformToast" aria-live="polite">
     <span class="toast-indicator"></span>
-    <span class="toast-msg" id="toastMsg">האתר במצב בסיס: זהות מאוזנת (גם וגם ואף אחד)</span>
+    <span class="toast-msg" id="toastMsg">נבחר עידן המקור: זהות מאוזנת (IDAN PRIME)</span>
   </div>
 
   <!-- Screen Shockwave / Burst Overlay on Transformation -->
@@ -28,27 +30,27 @@
   <!-- FIXED APP FRAME (Strict 100vh / Zero Vertical Page Scroll) -->
   <div class="market-viewport" id="marketViewport">
 
-    <!-- 1. BOUTIQUE STOREFRONT HEADER -->
+    <!-- 1. CHOOSE YOUR IDAN CONSOLE HEADER -->
     <header class="storefront-bar">
       <div class="storefront-brand">
         <a href="#item-hero" class="brand-link" id="brandLogo">
-          <span class="brand-badge">EDITION 01 / YARCHI</span>
-          <span class="brand-title">מכולת ירחי / ÉPICERIE YARCHI</span>
+          <span class="brand-badge">PLAYER SELECT // CHOOSE YOUR IDAN</span>
+          <span class="brand-title">CHOOSE YOUR IDAN // בחר את העידן שלך</span>
         </a>
         <div class="status-pill" id="quantumPill" title="המצב הקוונטי: לא רק זה ולא רק זה">
           <span class="status-dot"></span>
-          <span id="quantumStatusText">מצב: שניהם ואף אחד מהם (BOTH &amp; NEITHER)</span>
+          <span id="quantumStatusText">מצב פעיל: IDAN PRIME (שניהם ואף אחד)</span>
         </div>
       </div>
 
-      <!-- Department / Feature Filter Controls -->
-      <nav class="aisle-nav" aria-label="מחלקות המכולת">
-        <button type="button" class="aisle-btn is-active" data-filter="all">הכל (Tout)</button>
-        <button type="button" class="aisle-btn" data-filter="code">01 הנדסה</button>
-        <button type="button" class="aisle-btn" data-filter="design">02 עיצוב</button>
-        <button type="button" class="aisle-btn" data-filter="mix">★ המיקס</button>
-        <button type="button" class="aisle-btn" data-filter="somatic">חומרים מהחיים</button>
-        <button type="button" class="aisle-btn" data-filter="recall">סירוב ל-AI</button>
+      <!-- Character Selection / Class Filter Controls -->
+      <nav class="aisle-nav" aria-label="דמויות לבחירה">
+        <button type="button" class="aisle-btn is-active" data-filter="all">כל הדמויות (ALL)</button>
+        <button type="button" class="aisle-btn" data-filter="code">01 מהנדס תוכנה</button>
+        <button type="button" class="aisle-btn" data-filter="design">02 מעצב שוויצרי</button>
+        <button type="button" class="aisle-btn" data-filter="mix">★ המיקס הקוונטי</button>
+        <button type="button" class="aisle-btn" data-filter="somatic">04 פאנק סומטי</button>
+        <button type="button" class="aisle-btn" data-filter="recall">05 סירוב ל-AI</button>
       </nav>
 
       <div class="storefront-tools">
@@ -65,26 +67,26 @@
       </div>
     </header>
 
-    <!-- 2. THE HORIZONTAL BOUTIQUE AISLE (Horizontal Gallery / 100vh) -->
+    <!-- 2. THE HORIZONTAL CHARACTER ROSTER (Strict 100vh Horizontal Snap) -->
     <main class="aisle-strip" id="aisleStrip">
 
       <!-- ========================================================
-           PRODUCT 00: THE IDENTITY PACKAGE (LE PRODUIT HYBRIDE)
+           CHARACTER 00: IDAN PRIME // THE PARADOX (L'ORIGINE)
            ======================================================== -->
       <article class="product-stall stall--identity" id="item-hero" data-dept="mix">
         <div class="stall-header">
-          <span class="product-ref num">REF: YARCHI-2026-HQ</span>
-          <span class="product-tag tag--special">PIÈCE UNIQUE / יחיד במינו</span>
+          <span class="product-ref num">REF: IDAN-00-PRIME</span>
+          <span class="product-tag tag--special">ARCHETYPE: PRIME DUALITY</span>
         </div>
 
         <div class="stall-display">
-          <span class="boutique-label">ÉPICERIE FINE &amp; CODE CONCOCTÉ À LA MAIN</span>
+          <span class="boutique-label">CHARACTER 00 // THE CORE PARADOX</span>
           <h1 class="stall-headline">
-            <span class="first-name">עידן</span>
-            <span class="last-name">ירחי</span>
+            <span class="first-name">IDAN</span>
+            <span class="last-name">PRIME</span>
           </h1>
           <p class="stall-lead">
-            מהנדס תוכנה · מעצב UI/UX · חובב אסתטיקה, סדר, צבע, טניס, יוגה, מוזיקה חיה ופודקאסטים.
+            עידן המקור: מהנדס תוכנה · מעצב UI/UX · חובב אסתטיקה, סדר, צבע, טניס, יוגה, הופעות חיות ופודקאסטים.
           </p>
 
           <!-- The Core Paradox Quote -->
@@ -93,86 +95,88 @@
             <p>
               אני לא רק מהנדס תוכנה ולא רק מעצב UI/UX.<br />
               <strong>אני שניהם בו-זמנית, ואני אף אחד מהם לחוד.</strong><br />
-              העיצוב האמיתי נולד במתח שביניהם.
+              הזהות האמיתית מתגלה ביכולת לשנות צורה ולהסתגל למה שצריך.
             </p>
           </div>
         </div>
 
         <div class="stall-spec-table num">
-          <div class="spec-cell"><span class="lbl">POIDS / משקל:</span> <strong>100% אנושי</strong></div>
-          <div class="spec-cell"><span class="lbl">STATUT / סטאטוס:</span> <strong>סופרפוזיציה</strong></div>
-          <div class="spec-cell"><span class="lbl">GRILLE / גריד:</span> <strong>8px מודולרי</strong></div>
-          <div class="spec-cell"><span class="lbl">PRIX / מחיר:</span> <strong>בלתי ניתן לשכפול</strong></div>
+          <div class="spec-cell"><span class="lbl">CLASS / סיווג:</span> <strong>סופרפוזיציה</strong></div>
+          <div class="spec-cell"><span class="lbl">POWER / עוצמה:</span> <strong>100% אנושי</strong></div>
+          <div class="spec-cell"><span class="lbl">PASSIVE / פסיבי:</span> <strong>גריד 8px מודולרי</strong></div>
+          <div class="spec-cell"><span class="lbl">SPECIAL / מיוחד:</span> <strong>שינוי צורה מלא</strong></div>
         </div>
 
         <div class="stall-action">
-          <button type="button" class="buy-btn btn--state" data-transform="initial" title="איפוס האתר למצב מאוזן">
-            איפוס: חזרה לזהות הבסיס (État Initial)
+          <button type="button" class="buy-btn btn--state" data-transform="initial" title="בחר בעידן המקור">
+            <span class="btn-text">בחר עידן זה: IDAN PRIME</span>
+            <span class="btn-price">RESET ↺</span>
           </button>
         </div>
       </article>
 
       <!-- ========================================================
-           PRODUCT 01: SOFTWARE ENGINEERING (INGÉNIERIE PURE)
+           CHARACTER 01: IDAN.TS // THE DETERMINISTIC SOFTWARE ENGINEER
            ======================================================== -->
       <article class="product-stall stall--code" id="item-code" data-dept="code">
         <div class="stall-header">
-          <span class="product-ref num">ARTICLE 01 / SW</span>
-          <span class="product-tag tag--mono">DÉTERMINISTE / שחור-לבן</span>
+          <span class="product-ref num">REF: IDAN-01-CODE</span>
+          <span class="product-tag tag--mono">CLASS: SOFTWARE ENGINEER</span>
         </div>
 
         <div class="stall-display">
-          <span class="boutique-label">DISCIPLINE 01 — הנדסת תוכנה</span>
-          <h2 class="stall-title">קוד, ארכיטקטורה ולוגיקה צרופה</h2>
+          <span class="boutique-label">CHARACTER 01 // 100% DETERMINISM</span>
+          <h2 class="stall-title">IDAN.TS — מהנדס התוכנה</h2>
 
           <!-- Interactive Code Package -->
           <div class="carton-package">
             <div class="carton-tape">
               <span>TYPESCRIPT</span> · <span>0% COMPROMISE</span> · <span>8px BASELINE</span>
             </div>
-            <pre class="carton-code num"><code><span class="c-k">const</span> <span class="c-v">engineer</span>: <span class="c-t">ProductFeature</span> = {
-  domain: <span class="c-s">"Software Engineering"</span>,
+            <pre class="carton-code num"><code><span class="c-k">const</span> <span class="c-v">engineer</span>: <span class="c-t">IdanArchetype</span> = {
+  class: <span class="c-s">"Software Engineer"</span>,
   architecture: <span class="c-s">"Clean & Scalable"</span>,
   deterministic: <span class="c-k">true</span>,
-  paradox: <span class="c-s">"Coding with a designer mind"</span>
+  superpower: <span class="c-s">"Coding with a designer eye"</span>
 };</code></pre>
           </div>
 
           <ul class="ingredient-list">
-            <li><strong>איכות הסדר:</strong> מבנה נתונים דטרמיניסטי, ביצועים חדים, שום באג לא נסלח.</li>
+            <li><strong>איכות הסדר:</strong> ארכיטקטורה נקייה, ביצועים חדים, שום באג לא נסלח.</li>
             <li><strong>שחור-לבן מוחלט:</strong> שפת קוד שאינה זקוקה לקישוטים או גרדיאנטים.</li>
             <li><strong>הפרדוקס:</strong> כשאני מקודד, אני חושב כמעצב — על קצב, אלגנטיות ופשטות.</li>
           </ul>
         </div>
 
         <div class="stall-action">
-          <button type="button" class="buy-btn btn--code" data-transform="code" id="btnFilterCode" title="שנה את האתר למצב מהנדס תוכנה דטרמיניסטי">
-            שנה אתר למצב מהנדס תוכנה ⚡ (Transform Code)
+          <button type="button" class="buy-btn btn--code" data-transform="code" id="btnFilterCode" title="בחר בעידן מהנדס התוכנה">
+            <span class="btn-text">בחר עידן זה: מהנדס תוכנה</span>
+            <span class="btn-price">&lt;/&gt; SELECT</span>
           </button>
         </div>
       </article>
 
       <!-- ========================================================
-           PRODUCT 02: SWISS UI/UX DESIGN (DESIGN GRAPHIQUE SUISSE)
+           CHARACTER 02: IDAN BROCKMANN // THE SWISS MODERNIST
            ======================================================== -->
       <article class="product-stall stall--design" id="item-design" data-dept="design">
         <div class="stall-header">
-          <span class="product-ref num">ARTICLE 02 / UI</span>
-          <span class="product-tag tag--swiss">MÜLLER-BROCKMANN / 1957</span>
+          <span class="product-ref num">REF: IDAN-02-SWISS</span>
+          <span class="product-tag tag--swiss">CLASS: SWISS DESIGNER</span>
         </div>
 
         <div class="stall-display">
-          <span class="boutique-label">DISCIPLINE 02 — עיצוב ממשק</span>
-          <h2 class="stall-title">סדר מודרניסטי וטיפוגרפיה שיטתית</h2>
+          <span class="boutique-label">CHARACTER 02 // ZURICH 1957 · 0PX RADIUS</span>
+          <h2 class="stall-title">IDAN BROCKMANN — המעצב השוויצרי</h2>
 
           <!-- Swiss Spec Sheet Box -->
           <div class="swiss-ratio-box">
-            <div class="swiss-badge">SWISS MADE METHOD</div>
+            <div class="swiss-badge">SWISS CONSTRUCTIVIST SYSTEM</div>
             <div class="ratio-grid num">
               <div class="ratio-row"><span>GRID:</span> <strong>12 עמודות RTL</strong></div>
               <div class="ratio-row"><span>UNIT:</span> <strong>8px מודולרי</strong></div>
-              <div class="ratio-row"><span>TYPE:</span> <strong>IBM Plex Grotesque</strong></div>
-              <div class="ratio-row"><span>CONTRAST:</span> <strong>#0B0B0B על #F6F5F0</strong></div>
+              <div class="ratio-row"><span>RADIUS:</span> <strong>0px חדות מוחלטת</strong></div>
+              <div class="ratio-row"><span>PALETTE:</span> <strong>#000000 · #FFFFFF · #E60000</strong></div>
             </div>
           </div>
 
@@ -184,24 +188,25 @@
         </div>
 
         <div class="stall-action">
-          <button type="button" class="buy-btn btn--swiss" data-transform="design" id="btnFilterDesign" title="שנה את האתר למצב עיצוב שוויצרי קפדני">
-            שנה אתר למצב מעצב שוויצרי 📐 (Transform Swiss)
+          <button type="button" class="buy-btn btn--swiss" data-transform="design" id="btnFilterDesign" title="בחר בעידן המעצב השוויצרי">
+            <span class="btn-text">בחר עידן זה: מעצב שוויצרי</span>
+            <span class="btn-price">GRID SELECT</span>
           </button>
         </div>
       </article>
 
       <!-- ========================================================
-           PRODUCT 03: THE QUANTUM MIX (LA FUSION — BOTH & NEITHER)
+           CHARACTER 03: IDAN HYBRID // THE QUANTUM MIX
            ======================================================== -->
       <article class="product-stall stall--mix" id="item-mix" data-dept="mix">
         <div class="stall-header">
-          <span class="product-ref num">ARTICLE 03 / HYBRID</span>
-          <span class="product-tag tag--quantum">SUPERPOSITION QUANTIQUE</span>
+          <span class="product-ref num">REF: IDAN-03-HYBRID</span>
+          <span class="product-tag tag--quantum">CLASS: QUANTUM SUPERPOSITION</span>
         </div>
 
         <div class="stall-display">
-          <span class="boutique-label">LE MIX — גם וגם ואף אחד בו-זמנית</span>
-          <h2 class="stall-title">כור ההיתוך: שילוב התכונות והחיים</h2>
+          <span class="boutique-label">CHARACTER 03 // BOTH &amp; NEITHER AT ONCE</span>
+          <h2 class="stall-title">IDAN HYBRID — המיקס הקוונטי</h2>
 
           <!-- The Live Interactive Crossfader Slider -->
           <div class="market-crossfader">
@@ -215,7 +220,7 @@
 
           <!-- Dynamic Ingredient Cocktail -->
           <div class="cocktail-card" id="cocktailCard">
-            <span class="cocktail-tag">מצב תערובת נוכחי:</span>
+            <span class="cocktail-tag">מצב איזון נוכחי:</span>
             <p class="cocktail-desc" id="cocktailDesc">
               <strong>המיקס המושלם:</strong> הנדסה שיטתית הנפגשת עם עין עיצובית חדה ורגישות אנושית. הגריד הוא הרשת, והחיים הם הכדור שפוגע בה.
             </p>
@@ -232,28 +237,27 @@
         </div>
 
         <div class="stall-action">
-          <button type="button" class="buy-btn btn--mix" data-transform="mix" id="btnSurgeMix" title="שנה את האתר למצב סופרפוזיציה של המיקס">
-            שנה אתר למצב סופרפוזיציה ★ (Transform The Mix)
+          <button type="button" class="buy-btn btn--mix" data-transform="mix" id="btnSurgeMix" title="בחר בעידן המיקס הקוונטי">
+            <span class="btn-text">בחר עידן זה: המיקס הקוונטי</span>
+            <span class="btn-price">⚡ SELECT</span>
           </button>
         </div>
       </article>
 
       <!-- ========================================================
-           PRODUCT 04: THE SOMATIC HOBBIES (ÉPICERIE DE LOISIRS)
-           Real life raw materials: felt tennis ball, concert ticket,
-           festival wristband, rhino seal, yoga breath
+           CHARACTER 04: PUNK IDAN // SOMATIC ATHLETE & LIVE SOUL
            ======================================================== -->
       <article class="product-stall stall--somatic" id="item-somatic" data-dept="somatic">
         <div class="stall-header">
-          <span class="product-ref num">RAYON LOISIRS / 04</span>
-          <span class="product-tag tag--somatic">MATIÈRES VIVANTES / חומר חי</span>
+          <span class="product-ref num">REF: IDAN-04-CHAOS</span>
+          <span class="product-tag tag--somatic">CLASS: SOMATIC PUNK &amp; SOUL</span>
         </div>
 
         <div class="stall-display">
-          <span class="boutique-label">חומרי גלם אמיתיים — לא אייקונים מנומסים</span>
-          <h2 class="stall-title">תחביבים ככוחות חיים משבשים</h2>
+          <span class="boutique-label">CHARACTER 04 // RAW MATERIALS &amp; CHAOS</span>
+          <h2 class="stall-title">PUNK IDAN — החומר החי והגופניות</h2>
 
-          <!-- Playful Boutique Products Grid -->
+          <!-- Playful Character Artifacts Grid -->
           <div class="grocery-shelf">
 
             <!-- 1. Felt Tennis Ball with Score -->
@@ -325,29 +329,29 @@
         </div>
 
         <div class="stall-action">
-          <button type="button" class="buy-btn btn--somatic" data-transform="somatic" id="btnPlayTennisSound" title="שבור את האתר במצב סומטי צבעוני עם סאונד">
-            שבור אתר במצב סומטי 🎾 (Transform Somatic Break)
+          <button type="button" class="buy-btn btn--somatic" data-transform="somatic" id="btnPlayTennisSound" title="בחר בעידן הפאנק והגופניות">
+            <span class="btn-text">בחר עידן זה: פאנק סומטי</span>
+            <span class="btn-price">🎾 SELECT</span>
           </button>
         </div>
       </article>
 
       <!-- ========================================================
-           PRODUCT 05: TOPSOLOGY AUTOPSY (PRODUIT RAPPELÉ / REFUSAL)
-           The generic AI portfolio presented as a recalled toxic product
+           CHARACTER 05: IDAN RECALL // THE ANTI-AI REBEL
            ======================================================== -->
       <article class="product-stall stall--recall" id="item-recall" data-dept="recall">
         <div class="stall-header">
-          <span class="product-ref num">REF: AI-TOPSOLOGIE-404</span>
-          <span class="product-tag tag--danger">RAPPEL DE PRODUIT / נפסל במודע</span>
+          <span class="product-ref num">REF: IDAN-05-RECALL</span>
+          <span class="product-tag tag--danger">CLASS: ANTI-AI REBEL</span>
         </div>
 
         <div class="stall-display">
-          <span class="boutique-label">הסגר טופסולוגי — מוצר מנוון שסורב</span>
-          <h2 class="stall-title">מה שה-AI ניסה לייצר: סדר בלי עמדה</h2>
+          <span class="boutique-label">CHARACTER 05 // SYSTEM LOCKDOWN &amp; REFUSAL</span>
+          <h2 class="stall-title">IDAN RECALL — המורד בטופסולוגיה</h2>
 
           <!-- The Recalled AI SaaS Card -->
           <div class="quarantine-card" id="quarantineCard">
-            <div class="recall-banner">⚠️ מוצר מזויף שנפסל: פורטפוליו גנרי מודל שפה</div>
+            <div class="recall-banner">⚠️ תבנית AI מזויפת שנפסלה: פורטפוליו גנרי מודל שפה</div>
             <div class="fake-saas-body">
               <span class="fake-pill">✨ AI Powered SaaS Portfolio</span>
               <h3 class="fake-h3">Crafting delightful experiences at the intersection of design &amp; code.</h3>
@@ -373,25 +377,26 @@
         </div>
 
         <div class="stall-action">
-          <button type="button" class="buy-btn btn--reject" data-transform="recall" id="btnStampAgain" title="שנה את האתר למצב הסגר טופסולוגי">
-            שנה אתר למצב הסגר טופסולוגי 🛑 (Transform Autopsy)
+          <button type="button" class="buy-btn btn--reject" data-transform="recall" id="btnStampAgain" title="בחר בעידן המורד ב-AI">
+            <span class="btn-text">בחר עידן זה: הסגר טופסולוגי</span>
+            <span class="btn-price">🚫 SELECT</span>
           </button>
         </div>
       </article>
 
       <!-- ========================================================
-           PRODUCT 06: THE MANIFESTO DOSSIER (LE MANIFESTE)
-           The exact 332-word stance essay displayed in the boutique aisle
+           CHARACTER 06: IDAN ESSAYIST // THE PHILOSOPHER MANIFESTO
+           The exact 332-word stance essay displayed in the character dossier
            ======================================================== -->
       <article class="product-stall stall--manifesto" id="item-manifesto" data-dept="all">
         <div class="stall-header">
-          <span class="product-ref num">DOSSIER PHILOSOPHIQUE</span>
-          <span class="product-tag tag--manifesto">332 מילים / 100% עמדה</span>
+          <span class="product-ref num">REF: IDAN-06-PHILOSOPHER</span>
+          <span class="product-tag tag--manifesto">CLASS: PHILOSOPHY MANIFESTO</span>
         </div>
 
         <div class="stall-display">
-          <span class="boutique-label">מסת עמדה רשמית — תעודת זהות</span>
-          <h2 class="stall-title">מה מסודר, מה שובר, ולמה אני מסרב לטופס</h2>
+          <span class="boutique-label">CHARACTER 06 // DOSSIER PHILOSOPHIQUE</span>
+          <h2 class="stall-title">מסת העמדה הרשמית: 332 מילים</h2>
 
           <div class="manifesto-scrollbox">
             <!-- THE EXACT 332-WORD ESSAY -->
@@ -425,26 +430,27 @@
         </div>
 
         <div class="stall-action">
-          <button type="button" class="buy-btn btn--manifesto" data-transform="manifesto" id="btnTransformManifesto" title="שנה את האתר למצב מניפסט עיוני ממוקד">
-            שנה אתר למצב מניפסט עיוני 📜 (Transform Manifesto)
+          <button type="button" class="buy-btn btn--manifesto" data-transform="manifesto" id="btnTransformManifesto" title="בחר בעידן הפילוסוף">
+            <span class="btn-text">בחר עידן זה: מניפסט עיוני</span>
+            <span class="btn-price">📖 SELECT</span>
           </button>
         </div>
       </article>
 
     </main>
 
-    <!-- 3. STORE FOOTER TICKER & TELEMETRY -->
+    <!-- 3. FOOTER TELEMETRY & SHORTCUTS -->
     <footer class="storefront-footer">
       <div class="footer-colophon num">
-        <span>YARCHI MARKET · 2026</span>
-        <span>TYPOGRAPHY: RUBIK + IBM PLEX + AMATIC SC</span>
+        <span>CHOOSE YOUR IDAN · 2026 EDITION</span>
+        <span>CHARACTER SELECTION CONSOLE</span>
         <span>GRID: 8px MODULAR</span>
         <span>VIEWPORT: STRICT 100vh (NO SCROLL)</span>
       </div>
 
       <div class="footer-shortcuts">
         <span>ניווט: <kbd>→</kbd> <kbd>←</kbd> במקלדת</span>
-        <span>מקשים: <kbd>1</kbd> הנדסה · <kbd>2</kbd> עיצוב · <kbd>3</kbd> מיקס · <kbd>M</kbd> מניפסט · <kbd>G</kbd> גריד · <kbd>S</kbd> סאונד</span>
+        <span>בחירה: <kbd>0</kbd> פריים · <kbd>1</kbd> הנדסה · <kbd>2</kbd> עיצוב · <kbd>3</kbd> מיקס · <kbd>4</kbd> פאנק · <kbd>5</kbd> סירוב · <kbd>M</kbd> מניפסט</span>
       </div>
     </footer>
 

@@ -1,7 +1,7 @@
 /**
- * עידן ירחי — מכולת ירחי / ÉPICERIE YARCHI
- * HORIZONTAL BOUTIQUE AISLE & TRANSFORMATION ENGINE
- * Controls: Block Transformations, Smooth Horizontal Snapping, Crossfader, Web Audio, Stamping, Keyboard Shortcuts
+ * עידן ירחי — CHOOSE YOUR IDAN // בחר את העידן שלך
+ * CHARACTER SELECTION CONSOLE & TRANSFORMATION ENGINE
+ * Controls: Character Select Transformations, Smooth Horizontal Snapping, Crossfader, Web Audio, Stamping, Keyboard Shortcuts
  */
 
 (function () {
@@ -198,49 +198,49 @@
     }, { passive: false });
   }
 
-  // ---- 5. Transformation Engine (Showing Adaptability on Demand) ----
+  // ---- 5. Transformation Engine (CHOOSE YOUR IDAN Selection) ----
   const screenBurst = document.getElementById("screenBurst");
 
   const STATE_DESCRIPTIONS = {
     initial: {
-      toast: "↺ איפוס: האתר חזר למצב בסיס — מכולת בוטיק ארטיזנלית",
-      status: "מצב: שניהם ואף אחד מהם (BOTH & NEITHER)",
+      toast: "↺ נבחר עידן המקור: זהות מאוזנת ופתוחה (IDAN PRIME)",
+      status: "מצב פעיל: IDAN PRIME (שניהם ואף אחד)",
       audio: "chime",
       targetId: "item-hero"
     },
     code: {
-      toast: "⚡ שבירה למצב קוד: מסוף האקרים דטרמיניסטי מלא (IDE & CRT)",
-      status: "מצב: מהנדס תוכנה — 100% דטרמיניזם וקוד נקי",
+      toast: "⚡ נבחר עידן מהנדס התוכנה: 100% דטרמיניזם וקוד נקי (IDAN.TS)",
+      status: "מצב פעיל: מהנדס תוכנה — IDAN.TS (דטרמיניסטי)",
       audio: "code",
       targetId: "item-code"
     },
     design: {
-      toast: "📐 שבירה למצב שוויצרי: 0px רדיוס, טיפוגרפיה רדיקלית וגריד ציריך 1957",
-      status: "מצב: מעצב שוויצרי — גריד קפדני, 0px רדיוס, טיפוגרפיה שיטתית",
+      toast: "📐 נבחר עידן המעצב השוויצרי: 0px רדיוס, גריד 12 עמודות (IDAN BROCKMANN)",
+      status: "מצב פעיל: מעצב שוויצרי — IDAN BROCKMANN (מודרניסטי)",
       audio: "design",
       targetId: "item-design"
     },
     mix: {
-      toast: "✦ שבירה לסופרפוזיציה: זוהר קוונטי והולוגרפי — גם וגם בו-זמנית",
-      status: "מצב: סופרפוזיציה — גם וגם ואף אחד מהם בו-זמנית",
+      toast: "✦ נבחר עידן המיקס הקוונטי: מהנדס ומעצב בעת ובעונה אחת (IDAN HYBRID)",
+      status: "מצב פעיל: סופרפוזיציה — IDAN HYBRID (גם וגם)",
       audio: "mix",
       targetId: "item-mix"
     },
     somatic: {
-      toast: "🎾 שבירה סומטית: אנרכיית פאנק, כרטיסים עקומים וחבטת טניס 150 קמ״ש",
-      status: "מצב: שבירה סומטית — צבע, טניס 150 קמ״ש, חומר חי וסאונד",
+      toast: "🎾 נבחר עידן הפאנק הסומטי: גופניות, טניס 150 קמ״ש וחומר חי (PUNK IDAN)",
+      status: "מצב פעיל: פאנק סומטי — PUNK IDAN (כאוס חי)",
       audio: "tennis",
       targetId: "item-somatic"
     },
     recall: {
-      toast: "🚫 שבירה להסגר: כוננות חירום DEFCON 1 נגד שבלונות ה-AI",
-      status: "מצב: הסגר טופסולוגי — סירוב מוחלט לשבלונות AI",
+      toast: "🚫 נבחר עידן המורד ב-AI: כוננות הסגר נגד שבלונות (IDAN RECALL)",
+      status: "מצב פעיל: סירוב טופסולוגי — IDAN RECALL (הסגר)",
       audio: "stamp",
       targetId: "item-recall"
     },
     manifesto: {
-      toast: "📖 שבירה למניפסט: זרקור מוזיאלי ממוקד על מסת העמדה והאידיאולוגיה",
-      status: "מצב: מניפסט עיוני — קריאה מעמיקה בעמדת המעצב",
+      toast: "📖 נבחר עידן הפילוסוף: מסת העמדה המלאה (IDAN MANIFESTO)",
+      status: "מצב פעיל: מניפסט עיוני — IDAN MANIFESTO",
       audio: "chime",
       targetId: "item-manifesto"
     }
