@@ -1,12 +1,13 @@
 /* ==========================================================================
-   עידן ירחי — מכולת ירחי / ÉPICERIE YARHI (INSPIRATION: DINETTE.MARKET)
+   עידן ירחי — מכולת ירחי / ÉPICERIE YARCHI
    STRICT ZERO VERTICAL SCROLL · 100vh HORIZONTAL BOUTIQUE AISLE
+   TOTAL ADAPTABILITY: TRANSFORMATION ENGINE (STATE-BASED SYSTEM)
    ========================================================================== */
 
 :root {
   --u: 8px;
 
-  /* Dinette-Inspired Boutique Palette */
+  /* Boutique Palette (Base) */
   --bg-market: #f6f5f0;
   --bg-card: #ffffff;
   --bg-card-subtle: #eeede6;
@@ -27,6 +28,9 @@
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --font-sys: "IBM Plex Sans Hebrew", -apple-system, sans-serif;
   --font-script: "Amatic SC", "Caveat", cursive, sans-serif;
+
+  /* Dynamic Card Radius */
+  --radius-card: 14px;
 }
 
 *, *::before, *::after {
@@ -45,6 +49,7 @@ html, body {
   font-family: var(--font-sys);
   line-height: 1.4;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Texture Grain Overlay */
@@ -56,6 +61,48 @@ html, body {
   opacity: 0.04;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* Real-Time Transformation Toast */
+.transform-toast {
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--ink);
+  color: var(--bg-market);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 999px;
+  z-index: 150;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.transform-toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tennis-lime);
+  display: inline-block;
+  animation: pulseToast 1.5s infinite;
+}
+
+@keyframes pulseToast {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.5; }
 }
 
 /* Master Viewport Frame */
@@ -71,7 +118,7 @@ html, body {
   background-size: 100% calc(var(--u) * 2), calc(100% / 12) 100%;
   position: relative;
   overflow: hidden;
-  transition: background-image 0.2s ease;
+  transition: background-image 0.2s ease, background-color 0.4s ease;
 }
 
 .market-viewport.is-grid-off {
@@ -94,6 +141,7 @@ html, body {
   background: var(--bg-market);
   border-bottom: 2px solid var(--ink);
   z-index: 20;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
 .storefront-brand {
@@ -119,6 +167,7 @@ html, body {
   padding: 4px 8px;
   border-radius: 4px;
   letter-spacing: 0.05em;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .brand-title {
@@ -131,7 +180,8 @@ html, body {
 .status-pill {
   font-family: var(--font-mono);
   font-size: 10.5px;
-  background: #ffffff;
+  background: var(--bg-card);
+  color: var(--ink);
   border: 1px solid var(--ink);
   border-radius: 999px;
   padding: 3px 10px;
@@ -139,6 +189,7 @@ html, body {
   align-items: center;
   gap: 6px;
   box-shadow: 2px 2px 0 var(--ink);
+  transition: all 0.3s ease;
 }
 
 .status-dot {
@@ -154,7 +205,7 @@ html, body {
   50% { transform: scale(1.3); opacity: 0.6; }
 }
 
-/* Department Navigation Filter Buttons */
+/* Department Filter Navigation */
 .aisle-nav {
   display: flex;
   gap: 4px;
@@ -162,6 +213,7 @@ html, body {
   padding: 3px;
   border-radius: 999px;
   border: 1px solid var(--ink);
+  transition: border-color 0.3s;
 }
 
 .aisle-btn {
@@ -184,7 +236,7 @@ html, body {
 
 .aisle-btn.is-active {
   background: var(--ink);
-  color: #ffffff;
+  color: var(--bg-market);
 }
 
 .storefront-tools {
@@ -196,7 +248,7 @@ html, body {
 .tool-btn {
   font-family: var(--font-mono);
   font-size: 11px;
-  background: #ffffff;
+  background: var(--bg-card);
   color: var(--ink);
   border: 1px solid var(--ink);
   padding: 4px 9px;
@@ -231,7 +283,7 @@ html, body {
 }
 
 /* ==========================================================================
-   2. THE HORIZONTAL BOUTIQUE AISLE (Horizontal Scroll Gallery)
+   2. THE HORIZONTAL BOUTIQUE AISLE
    ========================================================================== */
 .aisle-strip {
   display: flex;
@@ -247,7 +299,6 @@ html, body {
   align-items: stretch;
 }
 
-/* Sleek Horizontal Scrollbar */
 .aisle-strip::-webkit-scrollbar {
   height: 7px;
 }
@@ -261,13 +312,14 @@ html, body {
   border-radius: 0;
 }
 
-/* Product Stall (Each Boutique Showcase Box) */
+/* Product Stall (Boutique Box) */
 .product-stall {
   flex: 0 0 clamp(350px, 30vw, 460px);
   height: 100%;
   background: var(--bg-card);
+  color: var(--ink);
   border: 2px solid var(--ink);
-  border-radius: 14px;
+  border-radius: var(--radius-card);
   display: flex;
   flex-direction: column;
   padding: calc(var(--u) * 2.5);
@@ -275,7 +327,7 @@ html, body {
   box-shadow: 5px 5px 0 var(--ink);
   position: relative;
   overflow: hidden;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-radius 0.3s ease, background-color 0.4s ease;
 }
 
 .product-stall:hover {
@@ -308,11 +360,11 @@ html, body {
   border: 1px solid var(--ink);
 }
 
-.tag--special { background: var(--tennis-lime); }
+.tag--special { background: var(--tennis-lime); color: #000; }
 .tag--mono { background: #000000; color: #ffffff; }
-.tag--swiss { background: #ffffff; color: var(--ink); }
+.tag--swiss { background: #ffffff; color: #000; }
 .tag--quantum { background: var(--nono-pink); color: #ffffff; }
-.tag--somatic { background: var(--dean-gold); }
+.tag--somatic { background: var(--dean-gold); color: #000; }
 .tag--danger { background: var(--danger-red); color: #ffffff; }
 .tag--manifesto { background: var(--rhino); color: #ffffff; }
 
@@ -364,7 +416,7 @@ html, body {
   color: var(--ink);
 }
 
-/* Paradox Callout in Stall 00 */
+/* Paradox Callout */
 .paradox-callout {
   background: var(--bg-card-subtle);
   border-inline-start: 4px solid var(--nono-pink);
@@ -408,42 +460,48 @@ html, body {
   font-size: 9px;
 }
 
-.stall-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-top: calc(var(--u) * 1.5);
-  padding-top: 8px;
-  border-top: 1px solid var(--rule);
+.stall-action {
+  margin-top: calc(var(--u) * 2);
 }
 
-.barcode-box {
-  display: flex;
-  flex-direction: column;
+/* Action & Transformation Button */
+.buy-btn {
+  width: 100%;
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 800;
+  padding: 10px 14px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: all 0.15s ease;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
 }
 
-.barcode-lines {
-  font-family: monospace;
-  font-size: 14px;
-  letter-spacing: 0.14em;
-  line-height: 1;
+.buy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--ink);
 }
 
-.barcode-code {
-  font-size: 9px;
-  color: var(--ink-muted);
+.buy-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 var(--ink);
 }
 
-.scroll-hint {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--ink-muted);
-}
+.btn--state { background: var(--bg-card-subtle); color: var(--ink); }
+.btn--code { background: #000000; color: #ffffff; }
+.btn--swiss { background: #ffffff; color: var(--ink); }
+.btn--mix { background: var(--tennis-lime); color: #000000; }
+.btn--somatic { background: var(--dean-gold); color: #000000; }
+.btn--reject { background: var(--danger-red); color: #ffffff; }
+.btn--manifesto { background: var(--rhino); color: #ffffff; }
 
-/* ==========================================================================
-   PRODUCT 01: SOFTWARE ENGINEERING PACKAGE
-   ========================================================================== */
+/* Code Package */
 .carton-package {
   background: #0b0b0b;
   color: #ffffff;
@@ -500,47 +558,7 @@ html, body {
   font-weight: 900;
 }
 
-.stall-action {
-  margin-top: calc(var(--u) * 2);
-}
-
-.buy-btn {
-  width: 100%;
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 800;
-  padding: 10px 16px;
-  border: 2px solid var(--ink);
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 3px 3px 0 var(--ink);
-  transition: all 0.15s ease;
-  text-decoration: none;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.buy-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 4px 4px 0 var(--ink);
-}
-
-.buy-btn:active {
-  transform: translateY(1px);
-  box-shadow: 1px 1px 0 var(--ink);
-}
-
-.btn--code { background: #000000; color: #ffffff; }
-.btn--swiss { background: #ffffff; color: var(--ink); }
-.btn--mix { background: var(--tennis-lime); color: var(--ink); }
-.btn--somatic { background: var(--dean-gold); color: #000000; }
-.btn--reject { background: var(--danger-red); color: #ffffff; }
-.btn--manifesto { background: var(--rhino); color: #ffffff; }
-
-/* ==========================================================================
-   PRODUCT 02: SWISS UI/UX DESIGN
-   ========================================================================== */
+/* Swiss Spec Box */
 .swiss-ratio-box {
   background: #ffffff;
   border: 1.5px solid var(--ink);
@@ -573,9 +591,7 @@ html, body {
   display: block;
 }
 
-/* ==========================================================================
-   PRODUCT 03: THE QUANTUM MIX
-   ========================================================================== */
+/* Crossfader & Cocktail */
 .market-crossfader {
   background: var(--bg-card-subtle);
   border: 1.5px solid var(--ink);
@@ -656,16 +672,14 @@ html, body {
   border: 1px solid var(--ink);
 }
 
-.chip--lime { background: var(--tennis-lime); }
+.chip--lime { background: var(--tennis-lime); color: #000; }
 .chip--pink { background: var(--nono-pink); color: #fff; }
-.chip--gold { background: var(--dean-gold); }
+.chip--gold { background: var(--dean-gold); color: #000; }
 .chip--clay { background: var(--clay); color: #fff; }
 .chip--rhino { background: var(--rhino); color: #fff; }
 .chip--moon { background: #000; color: #fff; }
 
-/* ==========================================================================
-   PRODUCT 04: SOMATIC HOBBIES (DINETTE GROCERY SHELF)
-   ========================================================================== */
+/* Somatic Hobbies Shelf */
 .grocery-shelf {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -717,7 +731,7 @@ html, body {
   color: var(--ink-muted);
 }
 
-/* 1. Felt Tennis Ball */
+/* Tennis Ball */
 .felt-ball {
   width: 44px;
   height: 44px;
@@ -745,9 +759,10 @@ html, body {
   font-weight: 900;
   position: relative;
   z-index: 2;
+  color: #000;
 }
 
-/* 2. Gold Ticket */
+/* Gold Ticket */
 .gold-stub {
   background: var(--dean-gold);
   border: 1px dashed var(--ink);
@@ -760,7 +775,7 @@ html, body {
 .stub-artist { font-family: var(--font-script); font-size: 16px; font-weight: 700; line-height: 1; display: block; }
 .stub-seat { font-size: 7px; display: block; }
 
-/* 3. Pink Wristband */
+/* Pink Wristband */
 .wristband-tag {
   background: var(--nono-pink);
   color: #ffffff;
@@ -773,7 +788,7 @@ html, body {
   transform: rotate(-2deg);
 }
 
-/* 4. HaKarnaf Ink Stamp */
+/* HaKarnaf Stamp */
 .rhino-ink-stamp {
   border: 2px solid var(--rhino);
   color: var(--rhino);
@@ -787,7 +802,7 @@ html, body {
 .rhino-emoji { font-size: 16px; }
 .rhino-name { font-family: var(--font-script); font-size: 16px; font-weight: 700; }
 
-/* 5. Yoga Breath Ring */
+/* Yoga Breath Ring */
 .breath-ring {
   width: 32px;
   height: 32px;
@@ -811,7 +826,7 @@ html, body {
   opacity: 0.6;
 }
 
-/* 6. Moon Heritage */
+/* Moon Badge */
 .moon-badge {
   display: flex;
   align-items: center;
@@ -821,9 +836,7 @@ html, body {
   font-weight: 700;
 }
 
-/* ==========================================================================
-   PRODUCT 05: TOPSOLOGY AUTOPSY (RECALLED PRODUCT)
-   ========================================================================== */
+/* Recalled Quarantine Card */
 .quarantine-card {
   background: #ffffff;
   border: 2px solid var(--danger-red);
@@ -880,7 +893,6 @@ html, body {
   color: #999999;
 }
 
-/* Vandalism Overlay */
 .vandalism-overlay {
   position: absolute;
   inset: 0;
@@ -936,7 +948,6 @@ html, body {
   margin-bottom: auto;
 }
 
-/* Dynamic Stamp Added by JS */
 .dynamic-stamp-refuse {
   position: absolute;
   border: 2px solid var(--danger-red);
@@ -957,9 +968,7 @@ html, body {
   100% { transform: translate(-50%, -50%) scale(1) rotate(var(--rot, 0deg)); opacity: 1; }
 }
 
-/* ==========================================================================
-   PRODUCT 06: THE MANIFESTO DOSSIER (332 WORDS)
-   ========================================================================== */
+/* Manifesto Scrollbox */
 .manifesto-scrollbox {
   flex: 1;
   background: var(--bg-card-subtle);
@@ -1006,6 +1015,7 @@ html, body {
   border-top: 1px solid var(--ink);
   font-size: 11px;
   z-index: 20;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
 .footer-colophon {
@@ -1022,15 +1032,144 @@ html, body {
 .footer-shortcuts kbd {
   font-family: var(--font-mono);
   background: var(--ink);
-  color: #ffffff;
+  color: var(--bg-market);
   padding: 1px 5px;
   border-radius: 3px;
   font-size: 10px;
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN (Adaptive Scaling)
+   4. TRANSFORMATION MODES (SHOWING TOTAL ADAPTABILITY ON BUTTON CLICK!)
    ========================================================================== */
+
+/* Mode 1: Code Mode (Terminal / Hacker IDE) */
+body.state-code {
+  --bg-market: #080b0f;
+  --bg-card: #0d1117;
+  --bg-card-subtle: #161b22;
+  --ink: #00ff66;
+  --ink-muted: #58a6ff;
+  --rule: rgba(0, 255, 102, 0.15);
+  --danger-red: #ff7b72;
+}
+
+body.state-code .brand-badge {
+  background: #00ff66;
+  color: #000000;
+}
+
+body.state-code .product-stall {
+  box-shadow: 4px 4px 0 rgba(0, 255, 102, 0.4);
+}
+
+body.state-code .market-viewport {
+  background-image:
+    linear-gradient(to bottom, rgba(0, 255, 102, 0.1) 1px, transparent 1px),
+    linear-gradient(to left, rgba(0, 255, 102, 0.1) 1px, transparent 1px);
+}
+
+/* Mode 2: Swiss Design Mode (Pure Müller-Brockmann White & Crimson) */
+body.state-design {
+  --bg-market: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f4f4f4;
+  --ink: #000000;
+  --ink-muted: #555555;
+  --rule: rgba(0, 0, 0, 0.22);
+  --tennis-lime: #e60000;
+  --radius-card: 0px; /* STRICT 0PX SHARP EDGES */
+}
+
+body.state-design .product-stall {
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #000000;
+}
+
+body.state-design .buy-btn,
+body.state-design .tool-btn,
+body.state-design .brand-badge,
+body.state-design .product-tag {
+  border-radius: 0;
+}
+
+body.state-design .market-viewport {
+  background-image:
+    linear-gradient(to bottom, rgba(230, 0, 0, 0.18) 1px, transparent 1px),
+    linear-gradient(to left, rgba(0, 0, 0, 0.22) 1px, transparent 1px);
+}
+
+/* Mode 3: The Quantum Mix Mode */
+body.state-mix {
+  --bg-market: #fbf7ee;
+  --bg-card: #ffffff;
+  --ink: #111111;
+  --rule: rgba(255, 51, 136, 0.25);
+}
+
+body.state-mix .stall--mix {
+  box-shadow: 0 0 24px rgba(212, 255, 0, 0.6), 6px 6px 0 #000;
+  border-color: #000;
+}
+
+/* Mode 4: Somatic Punk Shock (Tennis Ball Impact!) */
+body.state-somatic {
+  --bg-market: #fff9e6;
+  --ink: #1a0033;
+}
+
+body.state-somatic .product-stall:nth-child(odd) {
+  transform: rotate(-1.5deg) translateY(-2px);
+}
+
+body.state-somatic .product-stall:nth-child(even) {
+  transform: rotate(2deg) translateY(4px);
+}
+
+body.state-somatic .felt-ball {
+  animation: ballBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes ballBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4) rotate(20deg); }
+  100% { transform: scale(1); }
+}
+
+/* Mode 5: Recall Mode (Hazard Alert) */
+body.state-recall {
+  --bg-market: #fff1f2;
+  --ink: #990000;
+  --rule: rgba(230, 57, 70, 0.25);
+}
+
+body.state-recall .storefront-bar,
+body.state-recall .storefront-footer {
+  background: repeating-linear-gradient(
+    -45deg,
+    #fff1f2,
+    #fff1f2 10px,
+    #ffe4e6 10px,
+    #ffe4e6 20px
+  );
+}
+
+body.state-recall .stall--recall {
+  box-shadow: 0 0 20px rgba(230, 57, 70, 0.6), 6px 6px 0 #990000;
+}
+
+/* Mode 6: Manifesto Reading Mode */
+body.state-manifesto {
+  --bg-market: #eae5d9;
+  --bg-card: #f7f5ed;
+  --ink: #1e1b18;
+}
+
+body.state-manifesto .stall--manifesto {
+  box-shadow: 0 0 30px rgba(91, 43, 130, 0.35), 8px 8px 0 #1e1b18;
+  border-color: var(--rhino);
+}
+
+/* Responsive */
 @media (max-width: 900px) {
   .product-stall {
     flex: 0 0 clamp(300px, 82vw, 380px);

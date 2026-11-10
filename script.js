@@ -1,12 +1,13 @@
 /**
- * עידן ירחי — מכולת ירחי / ÉPICERIE YARHI (INSPIRATION: DINETTE.MARKET)
- * HORIZONTAL BOUTIQUE AISLE CONTROLLER: Smooth Horizontal Snapping, Crossfader, Web Audio, Stamping
+ * עידן ירחי — מכולת ירחי / ÉPICERIE YARCHI
+ * HORIZONTAL BOUTIQUE AISLE & TRANSFORMATION ENGINE
+ * Controls: Block Transformations, Smooth Horizontal Snapping, Crossfader, Web Audio, Stamping, Keyboard Shortcuts
  */
 
 (function () {
   "use strict";
 
-  // ---- DOM Elements ----
+  // ---- 1. DOM Elements ----
   const marketViewport = document.getElementById("marketViewport");
   const aisleStrip = document.getElementById("aisleStrip");
   const aisleBtns = document.querySelectorAll(".aisle-btn");
@@ -15,30 +16,32 @@
   const soundToggleBtn = document.getElementById("soundToggleBtn");
   const manifestoOpenBtn = document.getElementById("manifestoOpenBtn");
 
+  // Transformation Engine Elements
+  const transformButtons = document.querySelectorAll("[data-transform]");
+  const transformToast = document.getElementById("transformToast");
+  const toastMsg = document.getElementById("toastMsg");
+  const quantumStatusText = document.getElementById("quantumStatusText");
+  let toastTimer = null;
+
   // Boutique Slider & Cocktails
   const boutiqueSlider = document.getElementById("boutiqueSlider");
   const mixBadge = document.getElementById("mixBadge");
   const cocktailDesc = document.getElementById("cocktailDesc");
-  const btnSurgeMix = document.getElementById("btnSurgeMix");
 
   // Interactive Objects
   const tennisObject = document.getElementById("tennisObject");
-  const btnPlayTennisSound = document.getElementById("btnPlayTennisSound");
   const nonoObject = document.getElementById("nonoObject");
   const ticketObject = document.getElementById("ticketObject");
   const rhinoObject = document.getElementById("rhinoObject");
   const yogaObject = document.getElementById("yogaObject");
   const moonObject = document.getElementById("moonObject");
 
-  // Buttons in Stalls
-  const btnFilterCode = document.getElementById("btnFilterCode");
-  const btnFilterDesign = document.getElementById("btnFilterDesign");
-  const btnStampAgain = document.getElementById("btnStampAgain");
+  // Rejection & Topsology Elements
   const quarantineCard = document.getElementById("quarantineCard");
 
   let isSoundActive = true;
 
-  // ---- 1. Live Boutique Clock ----
+  // ---- 2. Live Boutique Clock ----
   const pad = (n) => String(n).padStart(2, "0");
   function tickClock() {
     if (!storeClock) return;
@@ -48,7 +51,7 @@
   setInterval(tickClock, 1000);
   tickClock();
 
-  // ---- 2. Web Audio Synthesizer (Tennis Hit, Stamp, Chime) ----
+  // ---- 3. Web Audio Synthesizer ----
   function playAudio(type = "tennis") {
     if (!isSoundActive) return;
     try {
@@ -56,13 +59,58 @@
       if (!AudioCtx) return;
       const ctx = new AudioCtx();
 
-      if (type === "tennis") {
+      if (type === "code") {
+        // 8-bit digital synth chirp / terminal execution
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "square";
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        osc.frequency.setValueAtTime(880, ctx.currentTime + 0.04);
+        osc.frequency.setValueAtTime(1760, ctx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.18, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.14);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.14);
+      } else if (type === "design") {
+        // Precision mechanical shutter click (Müller-Brockmann strictness)
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(1400, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.06);
+        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.06);
+      } else if (type === "mix") {
+        // Dual oscillator harmonic superposition chord (A4 + E5)
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc1.type = "sine";
+        osc2.type = "triangle";
+        osc1.frequency.setValueAtTime(440, ctx.currentTime);
+        osc2.frequency.setValueAtTime(659.25, ctx.currentTime);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.28);
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(ctx.destination);
+        osc1.start();
+        osc2.start();
+        osc1.stop(ctx.currentTime + 0.28);
+        osc2.stop(ctx.currentTime + 0.28);
+      } else if (type === "tennis") {
         // High tension racket strings + pressurized felt ball hit
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = "sine";
-        osc.frequency.setValueAtTime(320, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(58, ctx.currentTime + 0.1);
+        osc.frequency.setValueAtTime(340, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(55, ctx.currentTime + 0.1);
         gain.gain.setValueAtTime(0.9, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
         osc.connect(gain);
@@ -114,10 +162,12 @@
         osc.start();
         osc.stop(ctx.currentTime + 0.12);
       }
-    } catch (e) {}
+    } catch (e) {
+      // AudioContext not allowed or not supported; gracefully ignore
+    }
   }
 
-  // ---- 3. Smooth Horizontal Scroll to Specific Stall ----
+  // ---- 4. Smooth Horizontal Scroll to Stall ----
   function scrollToStall(elementId) {
     const target = document.getElementById(elementId);
     if (target && aisleStrip) {
@@ -141,10 +191,9 @@
     });
   });
 
-  // Action Buttons in Stalls
-  if (btnFilterCode) btnFilterCode.addEventListener("click", () => scrollToStall("item-code"));
-  if (btnFilterDesign) btnFilterDesign.addEventListener("click", () => scrollToStall("item-design"));
-  if (manifestoOpenBtn) manifestoOpenBtn.addEventListener("click", () => scrollToStall("item-manifesto"));
+  if (manifestoOpenBtn) {
+    manifestoOpenBtn.addEventListener("click", () => scrollToStall("item-manifesto"));
+  }
 
   // Wheel horizontal scrolling (convert vertical mousewheel to horizontal aisle scroll)
   if (aisleStrip) {
@@ -156,7 +205,104 @@
     }, { passive: false });
   }
 
-  // ---- 4. Boutique Crossfader Slider ----
+  // ---- 5. Transformation Engine (Showing Adaptability on Demand) ----
+  const STATE_DESCRIPTIONS = {
+    initial: {
+      toast: "↺ איפוס: האתר חזר למצב בסיס — זהות מאוזנת ופתוחה",
+      status: "מצב: שניהם ואף אחד מהם (BOTH & NEITHER)",
+      audio: "chime",
+      targetId: "item-hero"
+    },
+    code: {
+      toast: "⚡ שבירה למצב קוד: האתר עבר לתצורת מסוף האקרים דטרמיניסטי",
+      status: "מצב: מהנדס תוכנה — 100% דטרמיניזם וקוד נקי",
+      audio: "code",
+      targetId: "item-code"
+    },
+    design: {
+      toast: "📐 שבירה למצב שוויצרי: פינות חדות 0px, טיפוגרפיה רדיקלית ומבנה מודרניסטי",
+      status: "מצב: מעצב שוויצרי — גריד קפדני, 0px רדיוס, טיפוגרפיה שיטתית",
+      audio: "design",
+      targetId: "item-design"
+    },
+    mix: {
+      toast: "✦ שבירה לסופרפוזיציה: האתר במיקס מלא — מהנדס ומעצב בעת ובעונה אחת",
+      status: "מצב: סופרפוזיציה — גם וגם ואף אחד מהם בו-זמנית",
+      audio: "mix",
+      targetId: "item-mix"
+    },
+    somatic: {
+      toast: "🎾 שבירה סומטית: גופניות מתפרצת, כדור טניס וצבע חי בלתי צפוי",
+      status: "מצב: שבירה סומטית — צבע, טניס 150 קמ״ש, חומר חי וסאונד",
+      audio: "tennis",
+      targetId: "item-somatic"
+    },
+    recall: {
+      toast: "🚫 שבירה להסגר: תבניות ה-AI הסטנדרטיות הוכנסו להסגר מיידי",
+      status: "מצב: הסגר טופסולוגי — סירוב מוחלט לשבלונות AI",
+      audio: "stamp",
+      targetId: "item-recall"
+    },
+    manifesto: {
+      toast: "📖 שבירה למניפסט: האתר ממוקד בטקסט העמדה והאידיאולוגיה",
+      status: "מצב: מניפסט עיוני — קריאה מעמיקה בעמדת המעצב",
+      audio: "chime",
+      targetId: "item-manifesto"
+    }
+  };
+
+  const ALL_STATES = ["state-code", "state-design", "state-mix", "state-somatic", "state-recall", "state-manifesto"];
+
+  function applyTransformation(mode) {
+    // 1. Remove previous state classes
+    document.body.classList.remove(...ALL_STATES);
+
+    // 2. Add new state class if not initial
+    if (mode && mode !== "initial") {
+      document.body.classList.add(`state-${mode}`);
+    }
+
+    const stateConfig = STATE_DESCRIPTIONS[mode] || STATE_DESCRIPTIONS.initial;
+
+    // 3. Update Status HUD in header
+    if (quantumStatusText) {
+      quantumStatusText.textContent = stateConfig.status;
+    }
+
+    // 4. Update Toast notification
+    if (toastMsg && transformToast) {
+      toastMsg.textContent = stateConfig.toast;
+      transformToast.classList.add("is-visible");
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        transformToast.classList.remove("is-visible");
+      }, 2800);
+    }
+
+    // 5. Play corresponding audio
+    playAudio(stateConfig.audio);
+  }
+
+  // Hook all block transform buttons
+  transformButtons.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      const mode = btn.dataset.transform;
+      applyTransformation(mode);
+
+      // Specific block extras
+      if (mode === "recall") {
+        createDynamicStamp();
+      } else if (mode === "mix" && boutiqueSlider) {
+        boutiqueSlider.value = 50;
+        updateCrossfader(50);
+      } else if (mode === "somatic" && tennisObject) {
+        tennisObject.style.transform = "scale(1.15) rotate(-6deg)";
+        setTimeout(() => { tennisObject.style.transform = ""; }, 250);
+      }
+    });
+  });
+
+  // ---- 6. Boutique Crossfader Slider ----
   function updateCrossfader(val) {
     if (!mixBadge || !cocktailDesc) return;
     mixBadge.textContent = `★ THE MIX: ${val}% ★`;
@@ -177,34 +323,12 @@
     boutiqueSlider.addEventListener("input", (e) => updateCrossfader(Number(e.target.value)));
   }
 
-  if (btnSurgeMix) {
-    btnSurgeMix.addEventListener("click", function () {
-      if (boutiqueSlider) {
-        boutiqueSlider.value = 50;
-        updateCrossfader(50);
-      }
-      playAudio("chime");
-      document.body.style.boxShadow = "inset 0 0 50px var(--tennis-lime)";
-      setTimeout(() => { document.body.style.boxShadow = ""; }, 300);
-    });
-  }
-
-  // ---- 5. Somatic Hobby Object Clicks ----
+  // ---- 7. Somatic Hobby Object Clicks ----
   if (tennisObject) {
     tennisObject.addEventListener("click", () => {
       playAudio("tennis");
-      tennisObject.style.transform = "scale(1.08) rotate(-4deg)";
+      tennisObject.style.transform = "scale(1.12) rotate(-6deg)";
       setTimeout(() => { tennisObject.style.transform = ""; }, 200);
-    });
-  }
-
-  if (btnPlayTennisSound) {
-    btnPlayTennisSound.addEventListener("click", () => {
-      playAudio("tennis");
-      if (tennisObject) {
-        tennisObject.style.transform = "scale(1.08) rotate(-4deg)";
-        setTimeout(() => { tennisObject.style.transform = ""; }, 200);
-      }
     });
   }
 
@@ -248,7 +372,7 @@
     });
   }
 
-  // ---- 6. Dynamic Topsology Stamping ----
+  // ---- 8. Dynamic Topsology Stamping ----
   const rejectStamps = [
     "UNSYSTEMATIC",
     "לא מוצר מדף",
@@ -256,30 +380,29 @@
     "קלישאה ללא עמדה",
     "נפסל במודע",
     "INTER = לא פה",
-    "סדר מנוון"
+    "סדר מנוון",
+    "REJECTED BY DESIGNER"
   ];
 
-  if (btnStampAgain && quarantineCard) {
-    btnStampAgain.addEventListener("click", function () {
-      const stamp = document.createElement("div");
-      stamp.className = "dynamic-stamp-refuse";
-      const phrase = rejectStamps[Math.floor(Math.random() * rejectStamps.length)];
-      stamp.textContent = phrase;
+  function createDynamicStamp() {
+    if (!quarantineCard) return;
+    const stamp = document.createElement("div");
+    stamp.className = "dynamic-stamp-refuse";
+    const phrase = rejectStamps[Math.floor(Math.random() * rejectStamps.length)];
+    stamp.textContent = phrase;
 
-      const rot = Math.floor(Math.random() * 30) - 15;
-      const top = Math.floor(Math.random() * 40) + 30;
-      const left = Math.floor(Math.random() * 40) + 30;
+    const rot = Math.floor(Math.random() * 30) - 15;
+    const top = Math.floor(Math.random() * 40) + 30;
+    const left = Math.floor(Math.random() * 40) + 30;
 
-      stamp.style.transform = `translate(-50%, -50%) rotate(${rot}deg)`;
-      stamp.style.top = `${top}%`;
-      stamp.style.left = `${left}%`;
+    stamp.style.transform = `translate(-50%, -50%) rotate(${rot}deg)`;
+    stamp.style.top = `${top}%`;
+    stamp.style.left = `${left}%`;
 
-      quarantineCard.appendChild(stamp);
-      playAudio("stamp");
-    });
+    quarantineCard.appendChild(stamp);
   }
 
-  // ---- 7. Grid & Sound Toggles ----
+  // ---- 9. Grid & Sound Toggles ----
   function toggleGrid() {
     if (!marketViewport) return;
     const isOff = marketViewport.classList.toggle("is-grid-off");
@@ -297,7 +420,7 @@
 
   if (soundToggleBtn) soundToggleBtn.addEventListener("click", toggleSound);
 
-  // ---- 8. Keyboard Shortcuts & Arrow Key Navigation ----
+  // ---- 10. Keyboard Shortcuts & Arrow Key Navigation ----
   window.addEventListener("keydown", function (e) {
     if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
     const key = e.key.toLowerCase();
@@ -306,13 +429,26 @@
       if (aisleStrip) aisleStrip.scrollBy({ left: -380, behavior: "smooth" });
     } else if (e.key === "ArrowRight") {
       if (aisleStrip) aisleStrip.scrollBy({ left: 380, behavior: "smooth" });
+    } else if (key === "0") {
+      applyTransformation("initial");
+      scrollToStall("item-hero");
     } else if (key === "1") {
+      applyTransformation("code");
       scrollToStall("item-code");
     } else if (key === "2") {
+      applyTransformation("design");
       scrollToStall("item-design");
     } else if (key === "3" || key === " ") {
+      applyTransformation("mix");
       scrollToStall("item-mix");
+    } else if (key === "4") {
+      applyTransformation("somatic");
+      scrollToStall("item-somatic");
+    } else if (key === "5") {
+      applyTransformation("recall");
+      scrollToStall("item-recall");
     } else if (key === "m") {
+      applyTransformation("manifesto");
       scrollToStall("item-manifesto");
     } else if (key === "g") {
       toggleGrid();
