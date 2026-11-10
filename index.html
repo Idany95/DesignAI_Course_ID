@@ -2,414 +2,324 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>עידן ירחי — תעודת זהות / קו ההיגיון: מסדר לשבירה</title>
-  <meta name="description" content="תעודת זהות אישית של עידן ירחי: תנועה לאורך קו היגיון מסדר מודרניסטי שוויצרי, דרך סירוב לטופסולוגיה של ה-AI, ועד לשבירה פאנק-אישית בצבע וחומר חי." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>עידן ירחי — מפרט מוצר / מהנדס × מעצב × המיקס</title>
+  <meta name="description" content="עידן ירחי כמפרט מוצר אינטראקטיבי ללא גלילה: הנדסת תוכנה, עיצוב UI/UX, והמיקס. לא רק זה ולא רק זה — שניהם ואף אחד מהם בו-זמנית." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Typography System:
-       Order: IBM Plex Sans Hebrew + IBM Plex Sans + IBM Plex Mono
-       Break: Amatic SC + Rubik Black + Caveat
-       Topsology (Quarantined): Inter
-  -->
-  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Caveat:wght@600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;600;700&family=Rubik:ital,wght@0,700;0,900;1,900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Caveat:wght@600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;600;700&family=Rubik:ital,wght@0,700;0,900;1,900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect fill='%230e0e0e' width='16' height='16'/><line x1='0' y1='8' x2='16' y2='8' stroke='%23f5f3ec' stroke-width='1.5'/><line x1='8' y1='0' x2='8' y2='16' stroke='%23ccff00' stroke-width='1.5'/></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect fill='%230b0b0b' width='16' height='16'/><circle cx='8' cy='8' r='5' fill='%23ccff00'/><rect x='6' y='2' width='4' height='12' fill='%23ff2a85'/></svg>" />
 </head>
-<body class="flow-body" data-entropy-state="0">
+<body class="zero-scroll-body mode-mix">
 
-  <!-- Texture overlay for xerox / print grit -->
-  <div class="grain-overlay" aria-hidden="true"></div>
+  <!-- Grain texture overlay -->
+  <div class="grain-layer" aria-hidden="true"></div>
 
-  <!-- FIXED HUD: THE LOGIC CONTROLLER (Back and Forth Navigation) -->
-  <header class="hud" id="hud">
-    <div class="hud__inner">
-      <div class="hud__brand">
-        <span class="hud__badge">קו ההיגיון</span>
-        <span class="hud__title">עידן ירחי · תעודת זהות</span>
-        <span class="hud__state-tag" id="stateTag">ACT I: סדר טהור</span>
+  <!-- MAIN APP CONTAINER (100vh / No Scroll) -->
+  <div class="app-frame" id="appFrame">
+
+    <!-- 1. TOP CHASSIS / HEADER -->
+    <header class="chassis-bar">
+      <div class="chassis-left">
+        <span class="product-id-tag">PRODUCT SPEC: IDAN-YARHI-v1.0</span>
+        <span class="status-quantum" id="quantumBadge">QUANTUM SUPERPOSITION: BOTH &amp; NEITHER</span>
       </div>
 
-      <!-- Live Entropy / Tension Slider -->
-      <div class="hud__scrubber" title="שלוט במתח בזמן אמת: מסדר מודרניסטי ועד כאוס צבעוני">
-        <label for="entropySlider" class="hud__label">
-          <span>סדר (0°)</span>
-          <span class="hud__dial-val" id="dialVal">מתח: 0%</span>
-          <span>שבירה (100°)</span>
-        </label>
-        <div class="slider-wrap">
-          <input type="range" id="entropySlider" min="0" max="100" value="0" step="1" aria-label="מד מתח בין סדר לשבירה" />
+      <!-- THE CORE MIX CONTROLLER (Channel Selector) -->
+      <nav class="channel-selector" aria-label="בורר ערוצי זהות">
+        <button type="button" class="channel-btn" data-channel="code" title="מצב קוד ודטרמיניזם">
+          <span class="btn-num">01</span> מהנדס תוכנה
+        </button>
+        <button type="button" class="channel-btn is-active" data-channel="mix" title="המצב הקוונטי: שניהם ואף אחד מהם">
+          <span class="btn-num">★</span> THE MIX (גם וגם ואף אחד)
+        </button>
+        <button type="button" class="channel-btn" data-channel="design" title="מצב צורה ומשמעת שוויצרית">
+          <span class="btn-num">02</span> מעצב UI/UX
+        </button>
+      </nav>
+
+      <div class="chassis-right">
+        <button type="button" class="hud-pill" id="openManifestoBtn" title="קרא את מסת העמדה (314 מילים)">
+          <span class="pill-dot"></span> מסת עמדה [M]
+        </button>
+        <button type="button" class="hud-pill" id="gridToggleBtn" aria-pressed="true" title="כיבוי/הדלקת גריד [G]">
+          גריד: דולק [G]
+        </button>
+        <button type="button" class="hud-pill" id="soundToggleBtn" aria-pressed="true" title="כיבוי/הדלקת סאונד [S]">
+          סאונד [S]
+        </button>
+        <span class="clock-readout num" id="clockReadout">00:00:00</span>
+      </div>
+    </header>
+
+    <!-- 2. MAIN CONSOLE STAGE (Grid Dashboard 100vh) -->
+    <main class="console-stage" id="consoleStage">
+
+      <!-- COLUMN 1: FEATURE 01 — SOFTWARE ENGINEERING -->
+      <section class="console-col col-code" id="colCode">
+        <div class="col-header">
+          <span class="col-num num">01</span>
+          <div>
+            <h2 class="col-title">הנדסת תוכנה</h2>
+            <span class="col-sub">CODE &amp; DETERMINISM</span>
+          </div>
+        </div>
+
+        <div class="code-terminal">
+          <div class="terminal-bar">
+            <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
+            <span class="term-title">idan_yarhi.ts — 0% ERRORS</span>
+          </div>
+          <pre class="terminal-code"><code><span class="k">interface</span> <span class="t">HumanProduct</span> {
+  id: <span class="s">"idan-yarhi"</span>;
+  discipline: <span class="s">"code"</span> | <span class="s">"form"</span> | <span class="s">"mix"</span>;
+  deterministic: <span class="k">true</span>;
+  state: <span class="s">"both_and_neither"</span>;
+}
+
+<span class="k">const</span> <span class="v">identity</span>: <span class="t">HumanProduct</span> = {
+  id: <span class="s">"idan-yarhi"</span>,
+  discipline: <span class="s">"mix"</span>,
+  deterministic: <span class="k">true</span>,
+  state: <span class="s">"both_and_neither"</span>
+};</code></pre>
+        </div>
+
+        <div class="feature-bullets">
+          <div class="f-bullet">
+            <span class="bullet-tag">SPEC</span>
+            <p>ארכיטקטורה דטרמיניסטית, אלגוריתמיקה, וקוד נקי ללא פשרות.</p>
+          </div>
+          <div class="f-bullet">
+            <span class="bullet-tag">PARADOX</span>
+            <p>כשאני כותב קוד אני חושב כמעצב: מחפש קצב, פשטות ואסתטיקה.</p>
+          </div>
+        </div>
+
+        <div class="module-footer num">
+          <span>MEM: 64MB</span>
+          <span>LATENCY: 0.1ms</span>
+        </div>
+      </section>
+
+      <!-- COLUMN 2: THE MIX REACTOR — BOTH & NEITHER (The Central Showcase) -->
+      <section class="console-col col-mix" id="colMix">
+
+        <!-- THE QUANTUM CROSSFADER -->
+        <div class="crossfader-strip" title="הזז כדי לערבב בין קוד, עיצוב והשבירה">
+          <div class="crossfader-labels">
+            <span>מהנדס (קוד)</span>
+            <strong class="crossfader-current" id="crossfaderLabel">★ THE MIX: גם וגם ואף אחד ★</strong>
+            <span>מעצב (צורה)</span>
+          </div>
+          <input type="range" id="mixSlider" min="0" max="100" value="50" step="1" aria-label="בקרת מיקס" />
+        </div>
+
+        <!-- THE PRODUCT HERO SPECIFICATION -->
+        <div class="product-reactor-card">
+          <div class="reactor-header">
+            <span class="product-badge">HUMAN AS PRODUCT · NON-BINARY SPEC</span>
+            <span class="unit-measure num">8px BASELINE · 12 COL</span>
+          </div>
+
+          <div class="hero-name-block">
+            <h1 class="hero-name">
+              <span>עידן</span>
+              <span>ירחי</span>
+            </h1>
+            <p class="hero-latin num">IDAN YARHI — PRODUCT &amp; MATRIX</p>
+          </div>
+
+          <div class="paradox-statement">
+            <p class="quote-text">
+              ״אני לא רק מהנדס תוכנה ולא רק מעצב UI/UX. אני שניהם בו-זמנית, ואני אף אחד מהם לחוד. העיצוב קורה במתח שביניהם.״
+            </p>
+          </div>
+
+          <!-- INTERACTIVE HOBBY INGREDIENTS (THE SOMATIC COLLISION) -->
+          <div class="hobbies-blend-matrix">
+            <span class="blend-label">מרכיבי שבירה סומטיים (לחץ לערבוב אינטראקטיבי):</span>
+            <div class="blend-badges">
+              <button type="button" class="hobby-pill pill-tennis" id="tennisMixBtn" title="חבטת טניס: לחץ לצליל אקוסטי ברשת!">
+                🎾 טניס (150 קמ״ש)
+              </button>
+              <button type="button" class="hobby-pill pill-yoga" id="yogaMixBtn" title="יוגה: נשימת פראניאמה וחמר">
+                🧘 יוגה (נשימה)
+              </button>
+              <button type="button" class="hobby-pill pill-dean" id="deanMixBtn" title="Olivia Dean: זהב, סול, הופעה חיה">
+                🎺 Olivia Dean (זהב)
+              </button>
+              <button type="button" class="hobby-pill pill-nunu" id="nunuMixBtn" title="נונו: ורוד זרחני, שוברת את החדר">
+                ⚡ נונו (לא פלייליסט)
+              </button>
+              <button type="button" class="hobby-pill pill-rhino" id="rhinoMixBtn" title="הקרנף: חיה בעלת משקל פילוסופי">
+                🦏 פודקאסט ״הקרנף״
+              </button>
+              <button type="button" class="hobby-pill pill-moon" id="moonMixBtn" title="ירחי = ירח, מורשת ולא לוגו">
+                ☽ ירחי = ירח
+              </button>
+            </div>
+          </div>
+
+          <!-- THE LIVING TENNIS BALL ARTIFACT (Draggable + Acoustic hit) -->
+          <div class="center-ball-wrapper" id="ballWrapper">
+            <div class="interactive-ball" id="tennisBall" title="כדור טניס אמיתי · לחץ לחבטה ברשת / גרור בחופשיות">
+              <div class="ball-line ball-line--1"></div>
+              <div class="ball-line ball-line--2"></div>
+              <span class="ball-tag num">DEUCE</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- COLUMN 3: FEATURE 02 — UI/UX DESIGN -->
+      <section class="console-col col-design" id="colDesign">
+        <div class="col-header">
+          <span class="col-num num">02</span>
+          <div>
+            <h2 class="col-title">עיצוב UI/UX</h2>
+            <span class="col-sub">SPACE &amp; SWISS FORM</span>
+          </div>
+        </div>
+
+        <div class="design-spec-box">
+          <div class="spec-ratio-row">
+            <span class="mono-tag">GRID</span>
+            <span class="spec-data num">12 Columns · 8px Grid System</span>
+          </div>
+          <div class="spec-ratio-row">
+            <span class="mono-tag">TYPE</span>
+            <span class="spec-data">IBM Plex Sans Hebrew + Grotesque</span>
+          </div>
+          <div class="spec-ratio-row">
+            <span class="mono-tag">TONE</span>
+            <span class="spec-data">#0B0B0B Ink / #F5F3EC Warm Paper</span>
+          </div>
+          <div class="spec-ratio-row">
+            <span class="mono-tag">RULE</span>
+            <span class="spec-data">Josef Müller-Brockmann Discipline</span>
+          </div>
+        </div>
+
+        <div class="feature-bullets">
+          <div class="f-bullet">
+            <span class="bullet-tag">SYSTEM</span>
+            <p>משמעת שוויצרית קפדנית בשחור-לבן. שום פיקסל אינו מקרי.</p>
+          </div>
+          <div class="f-bullet">
+            <span class="bullet-tag">PARADOX</span>
+            <p>כשאני מעצב אני חושב כמהנדס: בונה שפה שיטתית הניתנת להגנה מתמטית.</p>
+          </div>
+        </div>
+
+        <div class="module-footer num">
+          <span>KERNING: OPTICAL</span>
+          <span>SCALE: 8 / 16 / 24 / 48</span>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 3. BOTTOM HARDWARE TRAY: HOBBIES & TOPSOLOGY AUTOPSY -->
+    <footer class="hardware-tray">
+
+      <!-- Real Life Somatic Artifacts -->
+      <div class="tray-section tray-artifacts">
+        <span class="tray-label num">PHYSICAL MATERIALS:</span>
+        <div class="tray-items">
+          <!-- Olivia Dean Ticket -->
+          <div class="mini-artifact ticket-mini" id="artTicket" title="כרטיס הופעה חיה — Olivia Dean">
+            <span class="art-badge">GIG</span>
+            <strong>Olivia Dean</strong>
+            <small class="num">GATE 4 · A-14</small>
+          </div>
+          <!-- Nono Wristband -->
+          <div class="mini-artifact wrist-mini" id="artWrist" title="צמיד מועדונים — נונו">
+            <strong>נונו · שוברת את החדר</strong>
+          </div>
+          <!-- HaKarnaf Rhino Stamp -->
+          <div class="mini-artifact rhino-mini" id="artRhino" title="חותמת פודקאסט ״הקרנף״">
+            <span class="rhino-icon">🦏</span>
+            <span>הקרנף: חיה, לא אייקון</span>
+          </div>
+          <!-- Yoga Breath Wave -->
+          <div class="mini-artifact yoga-mini" id="artYoga" title="יוגה: פראניאמה">
+            <span class="pulse-ring"></span>
+            <span>יוגה: נשימה על חמר</span>
+          </div>
         </div>
       </div>
 
-      <!-- Quick Toggles -->
-      <div class="hud__actions">
-        <button type="button" class="hud__btn" id="gridBtn" aria-pressed="true" title="הדלק/כבה קווי גריד [מקש G]">גריד: דולק [G]</button>
-        <button type="button" class="hud__btn" id="soundBtn" aria-pressed="true" title="הפעל/השתק צליל [מקש S]">סאונד: דולק [S]</button>
-        <button type="button" class="hud__btn" id="resetBtn" title="איפוס מיקומי אלמנטים [מקש R]">איפוס [R]</button>
+      <!-- The AI Topsology Quarantine & Refusal Unit -->
+      <div class="tray-section tray-topsology">
+        <span class="tray-label num">TOPSOLOGY AUTOPSY (סירוב למודל):</span>
+        <div class="quarantine-box" id="quarantineBox" title="ברירת המחדל הגנרית של ה-AI נכלאת ומבוטלת">
+          <div class="fake-pill">AI Default: 24px Radius + Inter + Mesh Gradient</div>
+          <p class="fake-quote">"Crafting delightful experiences at the intersection of design &amp; code..."</p>
+          <div class="stamp-denied">UNSYSTEMATIC · לא זה</div>
+        </div>
+        <button type="button" class="stamp-more-btn" id="stampMoreBtn" title="הטבע חותמת סירוב נוספת על הטופסולוגיה">
+          החתמת סירוב נוספת
+        </button>
+      </div>
+
+    </footer>
+
+  </div>
+
+  <!-- 4. SLIDE-OVER MANIFESTO DOSSIER (The 314-word Stance Essay) -->
+  <aside class="manifesto-drawer" id="manifestoDrawer" aria-hidden="true" role="dialog" aria-labelledby="manifestoTitle">
+    <div class="drawer-header">
+      <div>
+        <span class="drawer-mono num">DOSSIER NO. 01 / ESSAY</span>
+        <h2 class="drawer-title" id="manifestoTitle">מה מסודר, מה שובר, ולמה אני מסרב לטופס</h2>
+      </div>
+      <button type="button" class="drawer-close" id="closeManifestoBtn" aria-label="סגור מסת עמדה">✕</button>
+    </div>
+
+    <div class="drawer-content">
+      <div class="essay-stats num">
+        <span>WORD COUNT: 314</span>
+        <span>THEME: PRODUCTIVITY &amp; DUALITY</span>
+        <span>LANG: HEBREW</span>
+      </div>
+
+      <!-- THE EXACT 314-WORD ESSAY -->
+      <article class="stance-text">
+        <p>
+          אני מוצר פגום לפי הסטנדרטים של תעשיית התוכנה, ומוצר בלתי-אפשרי לפי האלגוריתמים של הבינה המלאכותית.
+          אם תבקשו ממודל שפה לארוז אותי, הוא יציע מיד את כרטיס המוצר המושלם: כותרת שיווקית באנגלית מלוטשת, שלוש תכונות (Features) מסודרות יפה בתוך כרטיסים מעוגלים — הנדסת תוכנה, עיצוב UI/UX, ותחביבים מתוקתקים — עטופים בגרדיאנט סגול-טורקיז ובגופן Inter. זוהי הטופסולוגיה בהתגלמותה: הפיכת האדם למוצר מדף נטול חיכוך, מסודר למראית עין, אך מרוקן מכל אידאולוגיה ומאבק.
+        </p>
+
+        <h3 class="stance-sub">02 — הפרדוקס: שניהם ואף אחד מהם</h3>
+        <p>
+          העמוד הזה נבנה כמפרט מוצר, אך כזה שמפרק את עצמו מבפנים ומסרב להגדרה בינארית. 
+          שואלים אותי לעיתים קרובות: האם אתה מהנדס או מעצב? התשובה האמיתית שלי היא: אני שניהם, ואני אף אחד מהם בו-זמנית.
+          כשאני כותב קוד, אני חושב כמעצב — מוטרד מקצב, ממתח חזותי, מחוסר שלמות אורגני ומאסתטיקה. כשאני מעצב ממשק, אני חושב כמהנדס — נשען על חוקים דטרמיניסטיים, על משמעת שוויצרית קפדנית ברוח יוזף מילר-ברוקמן, על גריד מודולרי של 8 פיקסלים, ועל טיפוגרפיה בשחור-לבן שכל יחס בה מנומק מתמטית. הסדר המודרניסטי עבורי אינו סגנון נוסטלגי, אלא אחריות מוסרית: אין שום פיקסל מקרי.
+        </p>
+
+        <h3 class="stance-sub">03 — השבירה הסומטית: החיים כמערבולת</h3>
+        <p>
+          אבל המערכת הזו אינה שלמה בלי השבירה שלה — והשבירה אינה עוד פיצ'ר ברשימה, אלא כוח החיים שמערער את המכונה.
+          התחביבים שלי אינם אייקונים מנומסים בפינת המסך, אלא חומרים פיזיים שמתנגשים במערכת ומשנים את תכונותיה:
+          המתח של מגרש הטניס, עם כדור ליים זרחני שטס ב-150 קמ״ש ופוגע ברשת, מתערבב בשקט ובנשימת הפראניאמה של היוגה על החמר. הזהב והנשמה החיה של Olivia Dean בהופעה מתערבבים בוורוד הזרחני והבועט של נונו ששוברת את החדר ללא אישור מהגריד. העומק הביקורתי של פודקאסט הקרנף מתערבב בשם המשפחה שלי, ירחי, שהוא ירח ומורשת עתיקה ולא סמליל מסחרי.
+        </p>
+
+        <h3 class="stance-sub">04 — המפגש: הרשת והכדור</h3>
+        <p>
+          כשמערבבים את כל הערוצים יחד (The Mix), קורה הדבר האמיתי: הסדר הוא הרשת, והחיים הם הכדור שפוגע בה. בלי הרשת — הכל מתפרק לכאוס חסר משמעות; בלי הפגיעה — הרשת היא סתם קישוט מוזיאלי מת, כלומר טופסולוגיה. 
+          אני לא מוצר שאפשר לרדד לתגית אחת. אני המתח החי שבין שחור-לבן לצבע, בין קוד לסאונד, ובין דיוק מתמטי לזיעה אנושית.
+        </p>
+      </article>
+
+      <div class="drawer-colophon">
+        <span class="mono-note">COLOPHON: IBM Plex Sans Hebrew / Mono / Amatic SC / Rubik Black / 8px Grid.</span>
+        <button type="button" class="drawer-done-btn" id="doneDrawerBtn">הבנתי, סגור מפרט</button>
       </div>
     </div>
-  </header>
-
-  <!-- THE CONTINUOUS LOGIC LINE (SVG Vector traversing the entire document) -->
-  <div class="logic-line-container" aria-hidden="true">
-    <svg class="logic-line-svg" preserveAspectRatio="none" viewBox="0 0 100 1000">
-      <!-- Defined dynamic path updated via JS -->
-      <path id="logicPath" d="M 50,0 L 50,220 C 50,250 85,280 85,350 C 85,420 20,460 20,540 L 80,620 L 30,700 L 70,780 C 70,850 50,890 50,1000" />
-    </svg>
-  </div>
-
-  <div class="document-canvas" id="canvas">
-
-    <!-- ========================================================
-         ACT I: THE SYSTEM — ORDER & DETERMINISM (Entropy = 0)
-         Josef Müller-Brockmann, 12-Column Modular Baseline, B&W
-         ======================================================== -->
-    <section class="act act--order" id="act-order" data-entropy="0">
-      <div class="act__watermark">01 / ORDER</div>
-      <div class="grid-wrap">
-
-        <div class="system-header">
-          <div class="system-meta">
-            <span class="mono-label">DOCUMENT NO. 01 / HW1</span>
-            <span class="mono-label" id="liveTime">00.00.0000 00:00:00</span>
-            <span class="mono-label">MODULE: 8px BASELINE / 12 COL</span>
-          </div>
-          <div class="system-id">
-            <h1 class="system-name">
-              <span class="name-first">עידן</span>
-              <span class="name-last">ירחי</span>
-            </h1>
-            <p class="system-latin">IDAN YARHI — CODE × FORM</p>
-            <p class="system-discipline">מהנדס תוכנה · מעצב UI/UX</p>
-          </div>
-        </div>
-
-        <div class="grid-rule"></div>
-
-        <!-- 8-Field Modernist Timetable Schema -->
-        <div class="system-matrix">
-          <div class="matrix-cell">
-            <span class="cell-idx">01</span>
-            <span class="cell-title">תפקיד / OCCUPATION</span>
-            <p class="cell-body">מהנדס תוכנה ומעצב ממשק. בניית מערכות דטרמיניסטיות, לא קישוטים שיווקיים.</p>
-          </div>
-          <div class="matrix-cell">
-            <span class="cell-idx">02</span>
-            <span class="cell-title">מתודולוגיה / METHOD</span>
-            <p class="cell-body">אסתטיקה קפדנית, סדר מתמטי, ומחקר חזותי בלתי מתפשר.</p>
-          </div>
-          <div class="matrix-cell">
-            <span class="cell-idx">03</span>
-            <span class="cell-title">משמעת / DISCIPLINE</span>
-            <p class="cell-body">גריד שוויצרי, 12 עמודות, כפולות של 8px, טיפוגרפיה גרוטסקית מנומקת.</p>
-          </div>
-          <div class="matrix-cell">
-            <span class="cell-idx">04</span>
-            <span class="cell-title">צבעוניות / PALETTE</span>
-            <p class="cell-body">שחור-לבן מוחלט. נייר חם <code>#F5F3EC</code> ודיו דיגיטלי <code>#0E0E0E</code>. אפס רעש.</p>
-          </div>
-          <div class="matrix-cell">
-            <span class="cell-idx">05</span>
-            <span class="cell-title">פיזיולוגיה / ANCHOR</span>
-            <p class="cell-body">טניס: משמעת של קווים ודיוק. יוגה: יציבה מודעת שלד-שריר.</p>
-          </div>
-          <div class="matrix-cell">
-            <span class="cell-idx">06</span>
-            <span class="cell-title">סאונד / FREQUENCY</span>
-            <p class="cell-body">Olivia Dean (סול חם), נונו (פופ משוחרר), פודקאסט ״הקרנף״ (פילוסופיה ביקורתית).</p>
-          </div>
-          <div class="matrix-cell">
-            <span class="cell-idx">07</span>
-            <span class="cell-title">זהות / HERITAGE</span>
-            <p class="cell-body">ירחי = ירח (Moon). שם משפחה ומורשת אנושית, לא לוגו מותג תאגידי.</p>
-          </div>
-          <div class="matrix-cell">
-            <span class="cell-idx">08</span>
-            <span class="cell-title">עמדה / INTENT</span>
-            <p class="cell-body">סירוב לטופסולוגיה המנוונת של מודלי שפה. דחיית פשרות עצלות.</p>
-          </div>
-        </div>
-
-        <div class="flow-indicator-box">
-          <span class="flow-arrow">↓</span>
-          <span class="flow-text">קו ההיגיון יורד: המפגש עם הדיפולט של המכונה</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================================
-         ACT II: THE CORRUPTION — TOPSOLOGY (AI Purgatory)
-         Exposing the generic AI defaults, quarantined & stamped
-         ======================================================== -->
-    <section class="act act--topsology" id="act-topsology" data-entropy="0.35">
-      <div class="act__watermark">02 / CORRUPTION</div>
-      <div class="grid-wrap">
-
-        <div class="section-title-block">
-          <div class="tag-alert">אזור הסגר טופסולוגי / AUTOPSY ZONE</div>
-          <h2 class="section-heading">הפיתוי של ברירת המחדל: סדר בלי עמדה</h2>
-          <p class="section-sub">
-            כשמבקשים ממודל שפה לייצר ״פורטפוליו מודרני של מהנדס ומעצב״, הוא לא מייצר סדר מודרניסטי וגם לא שבירה אנושית. 
-            הוא פולט <strong>טופסולוגיה</strong>: כרטיסים מעוגלים ב-24px, גרדיאנט סגול-טורקיז מרוכך, גופן Inter וקלישאות שיווקיות ריקות.
-            זהו צאצא מנוון של המודרניזם — פשרה עצלה שנועדה לא להרגיז איש. אנחנו מציגים אותו כאן כדי לחשוף, לסמן ולסרב.
-          </p>
-        </div>
-
-        <!-- The Generic AI Card (Quarantined) -->
-        <div class="fake-saas-card" id="fakeAiPod">
-          <div class="saas-badge-pill">✨ AI-Generated Portfolio · Powered by GenericLLM</div>
-          <h3 class="saas-headline">Crafting delightful experiences at the intersection of design &amp; engineering.</h3>
-          <p class="saas-copy">
-            Hi, I’m Idan! A passionate UI/UX designer and full-stack software engineer obsessed with clean code, scalable architecture, and user-centric vibes. Let’s collaborate to empower seamless synergy!
-          </p>
-
-          <div class="saas-features">
-            <div class="saas-feature-card">
-              <span class="feature-icon">🎨</span>
-              <strong>Pixel-Perfect UI</strong>
-              <p>Crafting intuitive interfaces tailored for modern teams.</p>
-            </div>
-            <div class="saas-feature-card">
-              <span class="feature-icon">⚡</span>
-              <strong>Scalable Code</strong>
-              <p>Robust engineering with cutting-edge tech stacks.</p>
-            </div>
-            <div class="saas-feature-card">
-              <span class="feature-icon">✨</span>
-              <strong>Good Vibes</strong>
-              <p>Music, tennis, yoga and building cool stuff together!</p>
-            </div>
-          </div>
-
-          <button type="button" class="saas-cta">Let's Connect Now →</button>
-
-          <!-- VANDALISM & REFUSAL OVERLAY -->
-          <div class="autopsy-vandalism" aria-hidden="true">
-            <div class="x-slash x-slash--1"></div>
-            <div class="x-slash x-slash--2"></div>
-            <div class="rubber-stamp rubber-stamp--unsystematic">
-              UNSYSTEMATIC<br />
-              <small>0% CONVICTION · 100% SLOP</small>
-            </div>
-            <div class="graffiti-refuse">לא זה.</div>
-            <div class="rejection-tape">INTER + ROUNDED + GRADIENT = לא שוויץ</div>
-          </div>
-        </div>
-
-        <!-- Interactive Stamping Action -->
-        <div class="autopsy-ctrl-bar">
-          <span class="mono-label">פעולת סירוב אקטיבית:</span>
-          <button type="button" class="action-stamp-btn" id="stampRefuseBtn">
-            הטבע חותמת סירוב נוספת על הטופסולוגיה
-          </button>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================================
-         ACT III: THE RUPTURE — SOMATIC TRUTH (Entropy = 0.75 -> 1.0)
-         David Carson, Wolfgang Weingart, Punk, Personal Artifacts
-         ======================================================== -->
-    <section class="act act--break" id="act-break" data-entropy="0.8">
-      <div class="act__watermark">03 / RUPTURE</div>
-
-      <!-- PERSONAL LIVING ARTIFACTS (Interactive Draggables) -->
-      
-      <!-- Tennis Baseline & Net Collision -->
-      <div class="court-line court-line--chalk" aria-hidden="true"></div>
-      <div class="court-line court-line--service" aria-hidden="true"></div>
-
-      <!-- Real Felt Tennis Ball -->
-      <div class="artifact ball-artifact" data-break data-sound="tennis" title="כדור טניס אמיתי · לחץ לחבטה ברשת / גרור על פני הגריד">
-        <div class="ball-seam ball-seam--1"></div>
-        <div class="ball-seam ball-seam--2"></div>
-        <span class="ball-score">DEUCE</span>
-      </div>
-
-      <!-- Olivia Dean Soul Concert Ticket -->
-      <div class="artifact ticket-artifact" data-break title="כרטיס הופעה חיה — Olivia Dean (גרור אותי)">
-        <div class="ticket-stub">ADMIT ONE</div>
-        <div class="ticket-body">
-          <span class="ticket-genre">SOUL · BRASS · LIVE GIG</span>
-          <strong class="ticket-artist">Olivia Dean</strong>
-          <span class="ticket-seat">GATE 04 · SEAT A-14 · STANDING</span>
-        </div>
-      </div>
-
-      <!-- Nono Fluorescent Punk Wristband -->
-      <div class="artifact wristband-artifact" data-break title="צמיד הופעה — נונו (גרור אותי)">
-        <span class="wristband-text">נונו · שוברת את החדר · לא פלייליסט</span>
-      </div>
-
-      <!-- HaKarnaf Stamped Ink Seal -->
-      <div class="artifact rhino-seal-artifact" data-break title="חותמת פודקאסט ״הקרנף״ (גרור אותי)">
-        <svg viewBox="0 0 160 160" class="rhino-svg">
-          <circle cx="80" cy="80" r="74" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="8 4"/>
-          <path d="M42 98 c6-26 22-46 38-50 16-4 32 8 42 20 8 10 16 16 20 12 2 10-6 20-18 28-18 10-44 16-64 8-10-4-18-12-18-18z" fill="currentColor"/>
-          <circle cx="94" cy="72" r="3.5" fill="#f5f3ec"/>
-          <text x="80" y="146" text-anchor="middle" font-size="16" font-family="'Amatic SC', cursive" font-weight="700">הקרנף · חיה ולא אייקון</text>
-        </svg>
-      </div>
-
-      <!-- Yoga Pranayama Breath Waveforms -->
-      <div class="artifact breath-artifact breath-artifact--1" data-break title="יוגה: נשימת פראניאמה לא מושלמת (גרור אותי)"></div>
-      <div class="artifact breath-artifact breath-artifact--2" data-break title="יוגה: עומק נשימה שני (גרור אותי)"></div>
-
-      <!-- Moon Heritage Note -->
-      <div class="artifact moon-note-artifact" data-break title="מורשת: ירחי = ירח (גרור אותי)">
-        <span class="moon-symbol">☽</span>
-        <p>ירחי = ירח.<br />לא לוגו מסחרי.<br />שם משפחה.</p>
-      </div>
-
-      <!-- Scorecard Badge -->
-      <div class="artifact scoreboard-artifact" data-break title="תוצאת טניס (גרור אותי)">
-        <span class="score-label">MATCH TENSION</span>
-        <strong class="score-numbers">40 — 40</strong>
-        <span class="score-detail">אהבה–15 · רשת פוגשת כדור</span>
-      </div>
-
-      <div class="grid-wrap relative-z">
-        <div class="rupture-intro">
-          <span class="tag-punk">אנטרופיה גבוהה / THE SOMATIC SHOCK</span>
-          <h2 class="rupture-title">
-            <span>מה שלא נכנס לטופס:</span>
-            <em>הגוף, החבטה, הנשמה והזיעה</em>
-          </h2>
-          <p class="rupture-lede">
-            השבירה אינה פילטר סטייליסטי. היא מה שקורה כשהמערכת פוגשת גוף אנושי. כדור טניס ב-150 קמ״ש שפוגע ברשת.
-            כרטיס הופעה מקומט של Olivia Dean בכיס. הוורוד הזרחני של נונו שלא מבקש רשות. הנשימה הלא-סימטרית של היוגה.
-            המשקל הפילוסופי של ״הקרנף״. <strong>החומרים האלה אינם ניתנים לשכפול בידי מודל שפה, כי הם נולדו מבשר ודם.</strong>
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================================
-         ACT IV: THE MANIFESTO — LIVING TENSION (The Essay)
-         Exact 348 words, 300–500 target range, Swiss typography
-         flanked by Weingartian marginalia & Carsonian eruptions
-         ======================================================== -->
-    <section class="act act--manifesto" id="act-manifesto" data-entropy="0.5">
-      <div class="act__watermark">04 / MANIFESTO</div>
-      <div class="grid-wrap">
-
-        <div class="manifesto-layout">
-          <!-- Marginalia Right / Start (Weingartian notes) -->
-          <aside class="manifesto-aside manifesto-aside--start">
-            <div class="margin-badge margin-badge--nunu">
-              <span>נונו:</span>
-              <p>לא נכנסת לכרטיס פיצ'רים.<br />היא נכנסת לחדר ומנפצת אותו.</p>
-            </div>
-            <div class="margin-badge margin-badge--dean">
-              <span>Olivia Dean:</span>
-              <p>נשמה וזהב חי על במה.<br />לא גרדיאנט Mesh בפיגמה.</p>
-            </div>
-          </aside>
-
-          <!-- Core Essay Body (The 348 Words Stance) -->
-          <article class="manifesto-article" id="stance-essay">
-            <header class="essay-heading-group">
-              <span class="mono-label">מסת עמדה / DESIGN &amp; AI ESSAY (348 מילים)</span>
-              <h2 class="essay-title">מה מסודר, מה שובר, ולמה אני מסרב לטופס</h2>
-            </header>
-
-            <div class="essay-body">
-              <p>
-                אני חי על קו. לא כסיסמה מעוצבת, אלא כמתח קיומי בין שני קצוות שמסרבים להתפשר: קו של קוד בינארי, וקו של מגרש טניס.
-                כמהנדס תוכנה ומעצב UI/UX, הסדר המודרניסטי אינו בשבילי סגנון רטרו או ״מינימליזם נקי״ לפיד בפינטרסט. הוא משמעת מוסרית. גריד שוויצרי ברוח יוזף מילר-ברוקמן אינו הגבלה, אלא שפה של אחריות: יחידת בסיס קפדנית של 8 פיקסלים, יחסים טיפוגרפיים שניתן להגן עליהם בהיגיון צרוף, והפרדה מוחלטת של שחור ודיו על גבי נייר. כשאני בונה ארכיטקטורה — בקוד או בממשק — כל פיקסל וכל שורת פקודה נבחרו בכוונה תחילה. שום דבר אינו מקרי.
-              </p>
-
-              <h3 class="essay-sub">02 — החומר שלא נכנס לשדה</h3>
-              <p>
-                אלא שהסדר הטהור, כשהוא נותר לבדו במעבדה סטרילית, הופך לקבר.
-                כאן בדיוק מופיעה הטופסולוגיה של הבינה המלאכותית — והיא האויב האמיתי של שני העולמות. המודל הגנרי מתחזה למודרניזם: הוא מציע Hero ממורכז, כרטיסים מעוגלים ב-24 פיקסלים, גרדיאנט סגול-טורקיז מרוכך, גופן Inter ומשפטים חלולים באנגלית שיווקית על ״יצירת חוויות מעוררות השראה״. זו אינה פשטות מודרניסטית, אלא סדר מנוון ללא אידאולוגיה וללא מאמץ. זוהי פשרה נוחה שמנסה לטשטש את החיכוך, לרדד את האינדיבידואל לתבנית מוצר, ולמכור אחידות תחת מסווה של נגישות.
-              </p>
-
-              <h3 class="essay-sub">03 — השבירה כאמת גופנית</h3>
-              <p>
-                מול הפיתוי הזה של הטופסולוגיה, השבירה אינה יכולה להיות עוד פילטר דקורטיבי או בלגן רנדומלי. השבירה שלי מגיעה מהחומר הפיזי, הביולוגי והבלתי-צפוי של החיים האמיתיים:
-                היא מגיעה מחבטה של 150 קמ״ש ברשת טניס, כשכדור ליים זרחני מסרב להישמע לקואורדינטות של המסך. היא מגיעה ממעגלי נשימה לא מושלמים ביוגה שמפרקים את הנוקשות של המכונה. היא פורצת מהזהב והנשמה החיה של Olivia Dean על במה, ומהוורוד הזרחני של נונו שמנפצת את החדר ואת הנימוס של הגריד. היא נושאת את המשקל התרבותי של פודקאסט ״הקרנף״ — חיה אמיתית כבדה בעלת קרן, ולא אייקון שטוח בפיגמה — ואת שם המשפחה שלי, ״ירחי״, שהוא ירח ומורשת ולא סמליל מסחרי.
-              </p>
-
-              <h3 class="essay-sub">04 — המפגש הוא המשחק</h3>
-              <p>
-                המפגש בין הסדר לשבירה אינו חלוקה נוחה של חצי-חצי או פשרה פושרת. הוא זרימה דינמית, קו היגיון שנמתח בין אפס מעלות אנטרופיה לבין כאוס מוחלט. הסדר הוא רשת הטניס; השבירה היא החבטה והזיעה. בלי הרשת — אין משחק, אלא רק התפרעות חסרת תוחלת. בלי החבטה והפגיעה — הרשת היא סתם חפץ מוזיאלי מת, כלומר טופסולוגיה. העיצוב האמיתי קורה בדיוק על הקו הזה: כשמשמעת שחורה-לבנה בלתי-מתפשרת פוגשת כוחות חיים בצבע שלא מבקשים רשות.
-              </p>
-            </div>
-          </article>
-
-          <!-- Marginalia Left / End -->
-          <aside class="manifesto-aside manifesto-aside--end">
-            <div class="margin-badge margin-badge--tennis">
-              <span>טניס:</span>
-              <p>בלי רשת אין משחק.<br />בלי חבטה הרשת היא קישוט.</p>
-            </div>
-            <div class="margin-badge margin-badge--rhino">
-              <span>הקרנף:</span>
-              <p>חיה בעלת קרן ומשקל תרבותי.<br />לא אייקון SVG מוחלק.</p>
-            </div>
-          </aside>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================================
-         ACT V: THE SYNTHESIS — THE TENNIS COURT OF DESIGN
-         Live Diagnostics, Colophon, Interactive Matrix
-         ======================================================== -->
-    <section class="act act--colophon" id="act-colophon" data-entropy="0.1">
-      <div class="grid-wrap">
-
-        <div class="colophon-header">
-          <span class="mono-label">SPECIFICATIONS / קולופון החלטות מודע</span>
-          <h2 class="colophon-title">מערכת, סירוב וחומר חי</h2>
-        </div>
-
-        <div class="colophon-grid">
-          <div class="spec-card">
-            <span class="spec-label">סדר וטיפוגרפיה</span>
-            <p><strong>IBM Plex Sans Hebrew + Mono</strong> כעמוד שדרה שיטתי. יחידת בסיס של 8px. שחור-לבן מוחלט בשכבת הסדר, ללא גרדיאנטים מותגיים.</p>
-          </div>
-          <div class="spec-card">
-            <span class="spec-label">שבירה וצבע</span>
-            <p><strong>Amatic SC + Rubik Black 900 + Caveat</strong> כביטוי אותנטי בעברית. ירוק-ליים, ורוד נונו זרחני, זהב נשמה, חמר יוגה וסגול קרנף.</p>
-          </div>
-          <div class="spec-card">
-            <span class="spec-label">הסגר טופסולוגי</span>
-            <p>בידוד מוחלט של גופן <strong>Inter</strong> לרכיב הנתיחה בלבד. סירוב מוצהר לממשקי SaaS גנריים ולעיגולי פינות נטולי אחריות.</p>
-          </div>
-          <div class="spec-card">
-            <span class="spec-label">תיעוד ב-REPO</span>
-            <p><a href="PROCESS.md" class="spec-link">PROCESS.md</a> — תיעוד התהליך, ההצעות הראשוניות של ה-AI, מה נפסל ומדוע.</p>
-          </div>
-        </div>
-
-        <!-- Live Viewport & System Diagnostics -->
-        <div class="live-diagnostics-bar">
-          <div class="diag-item"><span class="diag-key">VIEWPORT:</span> <span class="diag-val" id="diagViewport">—</span></div>
-          <div class="diag-item"><span class="diag-key">GRID UNIT:</span> <span class="diag-val">8px (Fixed Modular)</span></div>
-          <div class="diag-item"><span class="diag-key">COLUMNS:</span> <span class="diag-val">12 RTL System</span></div>
-          <div class="diag-item"><span class="diag-key">ENTROPY:</span> <span class="diag-val" id="diagEntropy">0.00</span></div>
-          <div class="diag-item"><span class="diag-key">STATUS:</span> <span class="diag-val diag-val--active">TENSION ACTIVE</span></div>
-        </div>
-
-        <footer class="final-footer">
-          <div class="footer-sign">
-            <strong>עידן ירחי</strong> · תרגיל בית 1 · Design × AI
-          </div>
-          <div class="footer-shortcuts">
-            קיצורי מקלדת: <kbd>G</kbd> כיבוי/הדלקת גריד · <kbd>S</kbd> סאונד · <kbd>R</kbd> איפוס מיקומים
-          </div>
-        </footer>
-
-      </div>
-    </section>
-
-  </div>
+  </aside>
 
   <script src="script.js"></script>
 </body>
