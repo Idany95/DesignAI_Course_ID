@@ -1,72 +1,76 @@
 /**
- * עידן ירחי — תעודת זהות / מפרט מוצר: מהנדס × מעצב × המיקס
- * ZERO-SCROLL CORE ENGINE: Channel Matrix, Quantum Crossfader, Synthesizer, Drawer
+ * עידן ירחי — מכולת ירחי / ÉPICERIE YARHI (INSPIRATION: DINETTE.MARKET)
+ * HORIZONTAL BOUTIQUE AISLE CONTROLLER: Smooth Horizontal Snapping, Crossfader, Web Audio, Stamping
  */
 
 (function () {
   "use strict";
 
   // ---- DOM Elements ----
-  const body = document.body;
-  const appFrame = document.getElementById("appFrame");
-  const channelBtns = document.querySelectorAll(".channel-btn");
-  const mixSlider = document.getElementById("mixSlider");
-  const crossfaderLabel = document.getElementById("crossfaderLabel");
-  const quantumBadge = document.getElementById("quantumBadge");
-  const clockReadout = document.getElementById("clockReadout");
+  const marketViewport = document.getElementById("marketViewport");
+  const aisleStrip = document.getElementById("aisleStrip");
+  const aisleBtns = document.querySelectorAll(".aisle-btn");
+  const storeClock = document.getElementById("storeClock");
   const gridToggleBtn = document.getElementById("gridToggleBtn");
   const soundToggleBtn = document.getElementById("soundToggleBtn");
-  const openManifestoBtn = document.getElementById("openManifestoBtn");
-  const closeManifestoBtn = document.getElementById("closeManifestoBtn");
-  const doneDrawerBtn = document.getElementById("doneDrawerBtn");
-  const manifestoDrawer = document.getElementById("manifestoDrawer");
-  const tennisBall = document.getElementById("tennisBall");
-  const quarantineBox = document.getElementById("quarantineBox");
-  const stampMoreBtn = document.getElementById("stampMoreBtn");
+  const manifestoOpenBtn = document.getElementById("manifestoOpenBtn");
 
-  // Hobby Buttons
-  const tennisMixBtn = document.getElementById("tennisMixBtn");
-  const yogaMixBtn = document.getElementById("yogaMixBtn");
-  const deanMixBtn = document.getElementById("deanMixBtn");
-  const nunuMixBtn = document.getElementById("nunuMixBtn");
-  const rhinoMixBtn = document.getElementById("rhinoMixBtn");
-  const moonMixBtn = document.getElementById("moonMixBtn");
+  // Boutique Slider & Cocktails
+  const boutiqueSlider = document.getElementById("boutiqueSlider");
+  const mixBadge = document.getElementById("mixBadge");
+  const cocktailDesc = document.getElementById("cocktailDesc");
+  const btnSurgeMix = document.getElementById("btnSurgeMix");
 
-  let isSoundOn = true;
+  // Interactive Objects
+  const tennisObject = document.getElementById("tennisObject");
+  const btnPlayTennisSound = document.getElementById("btnPlayTennisSound");
+  const nonoObject = document.getElementById("nonoObject");
+  const ticketObject = document.getElementById("ticketObject");
+  const rhinoObject = document.getElementById("rhinoObject");
+  const yogaObject = document.getElementById("yogaObject");
+  const moonObject = document.getElementById("moonObject");
 
-  // ---- 1. Live Clock ----
+  // Buttons in Stalls
+  const btnFilterCode = document.getElementById("btnFilterCode");
+  const btnFilterDesign = document.getElementById("btnFilterDesign");
+  const btnStampAgain = document.getElementById("btnStampAgain");
+  const quarantineCard = document.getElementById("quarantineCard");
+
+  let isSoundActive = true;
+
+  // ---- 1. Live Boutique Clock ----
   const pad = (n) => String(n).padStart(2, "0");
-  function updateClock() {
-    if (!clockReadout) return;
+  function tickClock() {
+    if (!storeClock) return;
     const d = new Date();
-    clockReadout.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    storeClock.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
   }
-  setInterval(updateClock, 1000);
-  updateClock();
+  setInterval(tickClock, 1000);
+  tickClock();
 
-  // ---- 2. Web Audio Synthesizer (Tennis Hit, Stamp, Synth Pop) ----
-  function playSound(type = "tennis") {
-    if (!isSoundOn) return;
+  // ---- 2. Web Audio Synthesizer (Tennis Hit, Stamp, Chime) ----
+  function playAudio(type = "tennis") {
+    if (!isSoundActive) return;
     try {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       if (!AudioCtx) return;
       const ctx = new AudioCtx();
 
       if (type === "tennis") {
-        // Pressurized rubber core + taut racket strings
+        // High tension racket strings + pressurized felt ball hit
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = "sine";
-        osc.frequency.setValueAtTime(310, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.85, ctx.currentTime);
+        osc.frequency.setValueAtTime(320, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(58, ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.9, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start();
         osc.stop(ctx.currentTime + 0.1);
 
-        // Felt impact noise burst
+        // Impact noise burst
         const bufferSize = Math.floor(ctx.sampleRate * 0.04);
         const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
         const data = buffer.getChannelData(0);
@@ -75,7 +79,7 @@
         noise.buffer = buffer;
         const filter = ctx.createBiquadFilter();
         filter.type = "bandpass";
-        filter.frequency.value = 850;
+        filter.frequency.value = 880;
         const noiseGain = ctx.createGain();
         noiseGain.gain.setValueAtTime(0.35, ctx.currentTime);
         noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
@@ -84,178 +88,168 @@
         noiseGain.connect(ctx.destination);
         noise.start();
       } else if (type === "stamp") {
-        // Heavy mechanical rubber stamp thud
+        // Heavy red ink rubber stamp thud
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = "triangle";
         osc.frequency.setValueAtTime(130, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(35, ctx.currentTime + 0.14);
+        osc.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + 0.15);
         gain.gain.setValueAtTime(0.9, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.14);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start();
-        osc.stop(ctx.currentTime + 0.14);
-      } else if (type === "pop") {
-        // High playful Nono pop
+        osc.stop(ctx.currentTime + 0.15);
+      } else if (type === "chime") {
+        // Playful boutique bell
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = "sine";
-        osc.frequency.setValueAtTime(580, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.08);
-        gain.gain.setValueAtTime(0.5, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+        osc.frequency.setValueAtTime(660, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(990, ctx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start();
-        osc.stop(ctx.currentTime + 0.08);
+        osc.stop(ctx.currentTime + 0.12);
       }
     } catch (e) {}
   }
 
-  // ---- 3. Channel Matrix Controller ----
-  function setChannel(channel) {
-    body.classList.remove("mode-code", "mode-mix", "mode-design");
-    body.classList.add(`mode-${channel}`);
-
-    channelBtns.forEach((btn) => {
-      btn.classList.toggle("is-active", btn.dataset.channel === channel);
-    });
-
-    if (channel === "code") {
-      if (mixSlider) mixSlider.value = 0;
-      if (crossfaderLabel) crossfaderLabel.textContent = "01 / מהנדס תוכנה: דטרמיניזם וקוד";
-      if (quantumBadge) quantumBadge.textContent = "MODE: CODE / ARCHITECTURE (0% COMPROMISE)";
-    } else if (channel === "design") {
-      if (mixSlider) mixSlider.value = 100;
-      if (crossfaderLabel) crossfaderLabel.textContent = "02 / מעצב UI/UX: משמעת שוויצרית וצורה";
-      if (quantumBadge) quantumBadge.textContent = "MODE: DESIGN / SWISS FORM (12 COLUMNS)";
-    } else {
-      if (mixSlider) mixSlider.value = 50;
-      if (crossfaderLabel) crossfaderLabel.textContent = "★ THE MIX: גם וגם ואף אחד בו-זמנית ★";
-      if (quantumBadge) quantumBadge.textContent = "QUANTUM SUPERPOSITION: BOTH & NEITHER";
+  // ---- 3. Smooth Horizontal Scroll to Specific Stall ----
+  function scrollToStall(elementId) {
+    const target = document.getElementById(elementId);
+    if (target && aisleStrip) {
+      target.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
     }
   }
 
-  channelBtns.forEach((btn) => {
-    btn.addEventListener("click", () => setChannel(btn.dataset.channel));
+  // Department Filter Clicks
+  aisleBtns.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      aisleBtns.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+
+      const filter = btn.dataset.filter;
+      if (filter === "all") scrollToStall("item-hero");
+      else if (filter === "code") scrollToStall("item-code");
+      else if (filter === "design") scrollToStall("item-design");
+      else if (filter === "mix") scrollToStall("item-mix");
+      else if (filter === "somatic") scrollToStall("item-somatic");
+      else if (filter === "recall") scrollToStall("item-recall");
+    });
   });
 
-  if (mixSlider) {
-    mixSlider.addEventListener("input", function (e) {
-      const val = Number(e.target.value);
-      if (val < 33) {
-        setChannel("code");
-        mixSlider.value = val;
-      } else if (val > 66) {
-        setChannel("design");
-        mixSlider.value = val;
-      } else {
-        setChannel("mix");
-        mixSlider.value = val;
+  // Action Buttons in Stalls
+  if (btnFilterCode) btnFilterCode.addEventListener("click", () => scrollToStall("item-code"));
+  if (btnFilterDesign) btnFilterDesign.addEventListener("click", () => scrollToStall("item-design"));
+  if (manifestoOpenBtn) manifestoOpenBtn.addEventListener("click", () => scrollToStall("item-manifesto"));
+
+  // Wheel horizontal scrolling (convert vertical mousewheel to horizontal aisle scroll)
+  if (aisleStrip) {
+    aisleStrip.addEventListener("wheel", function (e) {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        aisleStrip.scrollLeft += e.deltaY;
       }
-    });
+    }, { passive: false });
   }
 
-  // ---- 4. Draggable Tennis Ball ----
-  if (tennisBall) {
-    let isDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let moved = false;
+  // ---- 4. Boutique Crossfader Slider ----
+  function updateCrossfader(val) {
+    if (!mixBadge || !cocktailDesc) return;
+    mixBadge.textContent = `★ THE MIX: ${val}% ★`;
 
-    tennisBall.addEventListener("pointerdown", function (e) {
-      isDragging = true;
-      moved = false;
-      startX = e.clientX;
-      startY = e.clientY;
-      currentX = parseFloat(tennisBall.dataset.dragX || 0);
-      currentY = parseFloat(tennisBall.dataset.dragY || 0);
-      tennisBall.setPointerCapture(e.pointerId);
-    });
-
-    tennisBall.addEventListener("pointermove", function (e) {
-      if (!isDragging) return;
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
-      const nx = currentX + dx;
-      const ny = currentY + dy;
-      tennisBall.dataset.dragX = nx;
-      tennisBall.dataset.dragY = ny;
-      tennisBall.style.transform = `translate3d(${nx}px, ${ny}px, 0) rotate(-14deg)`;
-    });
-
-    const endBallDrag = function (e) {
-      if (!isDragging) return;
-      isDragging = false;
-      try { tennisBall.releasePointerCapture(e.pointerId); } catch (err) {}
-      if (!moved) {
-        playSound("tennis");
-      }
-    };
-
-    tennisBall.addEventListener("pointerup", endBallDrag);
-    tennisBall.addEventListener("pointercancel", endBallDrag);
+    if (val < 35) {
+      cocktailDesc.innerHTML =
+        "<strong>דומיננטיות קוד:</strong> אלגוריתמיקה, ארכיטקטורה נקייה, שחור-לבן מתמטי. החשיבה העיצובית מושקעת בלוגיקה ובמבנה.";
+    } else if (val > 65) {
+      cocktailDesc.innerHTML =
+        "<strong>דומיננטיות עיצוב שוויצרי:</strong> טיפוגרפיה שיטתית, גריד 12 עמודות, היררכיה חזותית וקריאות מקסימלית.";
+    } else {
+      cocktailDesc.innerHTML =
+        "<strong>סופרפוזיציה מושלמת (גם וגם ואף אחד):</strong> המתח החי שבין שחור-לבן לצבע, בין גריד מודרניסטי לכדור טניס שפוגע ברשת.";
+    }
   }
 
-  // ---- 5. Hobby Blend Buttons Feedback ----
-  if (tennisMixBtn) {
-    tennisMixBtn.addEventListener("click", () => {
-      playSound("tennis");
-      if (tennisBall) {
-        tennisBall.style.transform = "scale(1.2) rotate(15deg)";
-        setTimeout(() => {
-          tennisBall.style.transform = "rotate(-14deg)";
-        }, 200);
-      }
-    });
+  if (boutiqueSlider) {
+    boutiqueSlider.addEventListener("input", (e) => updateCrossfader(Number(e.target.value)));
   }
 
-  if (nunuMixBtn) {
-    nunuMixBtn.addEventListener("click", () => {
-      playSound("pop");
-      document.body.style.boxShadow = "inset 0 0 40px #ff2a85";
+  if (btnSurgeMix) {
+    btnSurgeMix.addEventListener("click", function () {
+      if (boutiqueSlider) {
+        boutiqueSlider.value = 50;
+        updateCrossfader(50);
+      }
+      playAudio("chime");
+      document.body.style.boxShadow = "inset 0 0 50px var(--tennis-lime)";
       setTimeout(() => { document.body.style.boxShadow = ""; }, 300);
     });
   }
 
-  if (deanMixBtn) {
-    deanMixBtn.addEventListener("click", () => {
-      playSound("pop");
+  // ---- 5. Somatic Hobby Object Clicks ----
+  if (tennisObject) {
+    tennisObject.addEventListener("click", () => {
+      playAudio("tennis");
+      tennisObject.style.transform = "scale(1.08) rotate(-4deg)";
+      setTimeout(() => { tennisObject.style.transform = ""; }, 200);
+    });
+  }
+
+  if (btnPlayTennisSound) {
+    btnPlayTennisSound.addEventListener("click", () => {
+      playAudio("tennis");
+      if (tennisObject) {
+        tennisObject.style.transform = "scale(1.08) rotate(-4deg)";
+        setTimeout(() => { tennisObject.style.transform = ""; }, 200);
+      }
+    });
+  }
+
+  if (nonoObject) {
+    nonoObject.addEventListener("click", () => {
+      playAudio("chime");
+      document.body.style.boxShadow = "inset 0 0 40px #ff3388";
+      setTimeout(() => { document.body.style.boxShadow = ""; }, 250);
+    });
+  }
+
+  if (ticketObject) {
+    ticketObject.addEventListener("click", () => {
+      playAudio("chime");
       document.body.style.boxShadow = "inset 0 0 40px #f5a623";
-      setTimeout(() => { document.body.style.boxShadow = ""; }, 300);
+      setTimeout(() => { document.body.style.boxShadow = ""; }, 250);
     });
   }
 
-  if (yogaMixBtn) {
-    yogaMixBtn.addEventListener("click", () => {
-      playSound("pop");
-      document.body.style.boxShadow = "inset 0 0 40px #d05a2b";
-      setTimeout(() => { document.body.style.boxShadow = ""; }, 300);
-    });
-  }
-
-  if (rhinoMixBtn) {
-    rhinoMixBtn.addEventListener("click", () => {
-      playSound("stamp");
+  if (rhinoObject) {
+    rhinoObject.addEventListener("click", () => {
+      playAudio("stamp");
       document.body.style.boxShadow = "inset 0 0 40px #5b2b82";
-      setTimeout(() => { document.body.style.boxShadow = ""; }, 300);
+      setTimeout(() => { document.body.style.boxShadow = ""; }, 250);
     });
   }
 
-  if (moonMixBtn) {
-    moonMixBtn.addEventListener("click", () => {
-      playSound("stamp");
+  if (yogaObject) {
+    yogaObject.addEventListener("click", () => {
+      playAudio("chime");
+      document.body.style.boxShadow = "inset 0 0 40px #d05a2b";
+      setTimeout(() => { document.body.style.boxShadow = ""; }, 250);
+    });
+  }
+
+  if (moonObject) {
+    moonObject.addEventListener("click", () => {
+      playAudio("stamp");
       document.body.style.filter = "invert(1)";
-      setTimeout(() => { document.body.style.filter = ""; }, 250);
+      setTimeout(() => { document.body.style.filter = ""; }, 200);
     });
   }
 
-  // ---- 6. Topsology Stamping Action ----
-  const refusePhrases = [
+  // ---- 6. Dynamic Topsology Stamping ----
+  const rejectStamps = [
     "UNSYSTEMATIC",
     "לא מוצר מדף",
     "0% CONVICTION",
@@ -265,11 +259,11 @@
     "סדר מנוון"
   ];
 
-  if (stampMoreBtn && quarantineBox) {
-    stampMoreBtn.addEventListener("click", function () {
+  if (btnStampAgain && quarantineCard) {
+    btnStampAgain.addEventListener("click", function () {
       const stamp = document.createElement("div");
-      stamp.className = "stamp-denied";
-      const phrase = refusePhrases[Math.floor(Math.random() * refusePhrases.length)];
+      stamp.className = "dynamic-stamp-refuse";
+      const phrase = rejectStamps[Math.floor(Math.random() * rejectStamps.length)];
       stamp.textContent = phrase;
 
       const rot = Math.floor(Math.random() * 30) - 15;
@@ -280,73 +274,51 @@
       stamp.style.top = `${top}%`;
       stamp.style.left = `${left}%`;
 
-      quarantineBox.appendChild(stamp);
-      playSound("stamp");
+      quarantineCard.appendChild(stamp);
+      playAudio("stamp");
     });
   }
 
-  // ---- 7. Manifesto Drawer Controls ----
-  function openManifesto() {
-    if (manifestoDrawer) {
-      manifestoDrawer.classList.add("is-open");
-      manifestoDrawer.setAttribute("aria-hidden", "false");
-    }
-  }
-
-  function closeManifesto() {
-    if (manifestoDrawer) {
-      manifestoDrawer.classList.remove("is-open");
-      manifestoDrawer.setAttribute("aria-hidden", "true");
-    }
-  }
-
-  if (openManifestoBtn) openManifestoBtn.addEventListener("click", openManifesto);
-  if (closeManifestoBtn) closeManifestoBtn.addEventListener("click", closeManifesto);
-  if (doneDrawerBtn) doneDrawerBtn.addEventListener("click", closeManifesto);
-
-  // ---- 8. Grid & Sound Toggles ----
+  // ---- 7. Grid & Sound Toggles ----
   function toggleGrid() {
-    if (!appFrame) return;
-    const isOff = appFrame.classList.toggle("is-grid-off");
+    if (!marketViewport) return;
+    const isOff = marketViewport.classList.toggle("is-grid-off");
     gridToggleBtn.setAttribute("aria-pressed", String(!isOff));
-    gridToggleBtn.textContent = isOff ? "גריד: כבוי [G]" : "גריד: דולק [G]";
+    gridToggleBtn.textContent = isOff ? "גריד: כבוי [G]" : "גריד [G]";
   }
 
   if (gridToggleBtn) gridToggleBtn.addEventListener("click", toggleGrid);
 
   function toggleSound() {
-    isSoundOn = !isSoundOn;
-    soundToggleBtn.setAttribute("aria-pressed", String(isSoundOn));
-    soundToggleBtn.textContent = isSoundOn ? "סאונד [S]" : "מושתק [S]";
+    isSoundActive = !isSoundActive;
+    soundToggleBtn.setAttribute("aria-pressed", String(isSoundActive));
+    soundToggleBtn.textContent = isSoundActive ? "סאונד [S]" : "מושתק [S]";
   }
 
   if (soundToggleBtn) soundToggleBtn.addEventListener("click", toggleSound);
 
-  // ---- 9. Keyboard Shortcuts ----
+  // ---- 8. Keyboard Shortcuts & Arrow Key Navigation ----
   window.addEventListener("keydown", function (e) {
     if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
     const key = e.key.toLowerCase();
-    if (key === "m") {
-      if (manifestoDrawer && manifestoDrawer.classList.contains("is-open")) {
-        closeManifesto();
-      } else {
-        openManifesto();
-      }
-    } else if (key === "escape") {
-      closeManifesto();
+
+    if (e.key === "ArrowLeft") {
+      if (aisleStrip) aisleStrip.scrollBy({ left: -380, behavior: "smooth" });
+    } else if (e.key === "ArrowRight") {
+      if (aisleStrip) aisleStrip.scrollBy({ left: 380, behavior: "smooth" });
+    } else if (key === "1") {
+      scrollToStall("item-code");
+    } else if (key === "2") {
+      scrollToStall("item-design");
+    } else if (key === "3" || key === " ") {
+      scrollToStall("item-mix");
+    } else if (key === "m") {
+      scrollToStall("item-manifesto");
     } else if (key === "g") {
       toggleGrid();
     } else if (key === "s") {
       toggleSound();
-    } else if (key === "1") {
-      setChannel("code");
-    } else if (key === "2") {
-      setChannel("design");
-    } else if (key === "3" || key === " ") {
-      setChannel("mix");
     }
   });
 
-  // Default mode
-  setChannel("mix");
 })();
