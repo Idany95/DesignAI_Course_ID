@@ -479,4 +479,257 @@
     }
   });
 
+  // ============================================================
+  //  RICH LIVE ANIMATIONS — PER BLOCK
+  // ============================================================
+
+  // ---- A. BUILD STATUS BADGE CYCLER (IDAN.TS block) ----
+  const buildBadge = document.getElementById("buildBadge");
+  const buildStates = [
+    "⬛ COMPILING...",
+    "🔁 RUNNING TESTS...",
+    "✅ BUILD PASSING",
+    "● BUILD PASSING"
+  ];
+  let buildIdx = 0;
+  if (buildBadge) {
+    setInterval(() => {
+      buildIdx = (buildIdx + 1) % buildStates.length;
+      buildBadge.textContent = buildStates[buildIdx];
+      buildBadge.style.color = buildIdx === 2 || buildIdx === 3 ? "var(--tennis-lime)" : "#aaa";
+    }, 2200);
+  }
+
+  // ---- B. MATRIX RAIN EASTER EGG (click on code block) ----
+  const codePackage = document.getElementById("codePackage");
+  const matrixCanvas = document.getElementById("matrixCanvas");
+
+  if (codePackage && matrixCanvas) {
+    const mCtx = matrixCanvas.getContext("2d");
+    let matrixActive = false;
+    let matrixRAF = null;
+    const chars = "01アイウエオカキクケコ<>/{}()[]=>".split("");
+    const cols = Math.floor(matrixCanvas.width / 10);
+    const drops = Array(cols).fill(1);
+
+    function drawMatrix() {
+      mCtx.fillStyle = "rgba(0,0,0,0.12)";
+      mCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+      mCtx.fillStyle = "#00ff66";
+      mCtx.font = "9px monospace";
+      drops.forEach((y, i) => {
+        const ch = chars[Math.floor(Math.random() * chars.length)];
+        mCtx.fillText(ch, i * 10, y * 10);
+        if (y * 10 > matrixCanvas.height && Math.random() > 0.97) drops[i] = 0;
+        drops[i]++;
+      });
+      matrixRAF = requestAnimationFrame(drawMatrix);
+    }
+
+    codePackage.addEventListener("click", () => {
+      if (!matrixActive) {
+        matrixCanvas.style.display = "block";
+        matrixActive = true;
+        drawMatrix();
+        playAudio("code");
+        setTimeout(() => {
+          cancelAnimationFrame(matrixRAF);
+          matrixCanvas.style.display = "none";
+          matrixActive = false;
+        }, 1600);
+      }
+    });
+  }
+
+  // ---- C. SWISS GRID ANIMATION CANVAS (IDAN BROCKMANN block) ----
+  const swissCanvas = document.getElementById("swissGridCanvas");
+  if (swissCanvas) {
+    const sCtx = swissCanvas.getContext("2d");
+    const totalLines = 12;
+    let lineProgress = 0;
+
+    function drawSwissGrid() {
+      sCtx.clearRect(0, 0, swissCanvas.width, swissCanvas.height);
+      const colW = swissCanvas.width / totalLines;
+      const visibleCols = Math.floor(lineProgress);
+      sCtx.strokeStyle = "rgba(230,0,0,0.5)";
+      sCtx.lineWidth = 1;
+      for (let i = 1; i <= visibleCols; i++) {
+        const x = i * colW;
+        sCtx.beginPath();
+        sCtx.moveTo(x, 0);
+        sCtx.lineTo(x, swissCanvas.height);
+        sCtx.stroke();
+      }
+      // Partial next line
+      const frac = lineProgress - visibleCols;
+      if (visibleCols < totalLines) {
+        const x = (visibleCols + 1) * colW;
+        sCtx.globalAlpha = frac;
+        sCtx.beginPath();
+        sCtx.moveTo(x, 0);
+        sCtx.lineTo(x, swissCanvas.height);
+        sCtx.stroke();
+        sCtx.globalAlpha = 1;
+      }
+      // Horizontal baseline
+      sCtx.strokeStyle = "rgba(0,0,0,0.3)";
+      sCtx.beginPath();
+      sCtx.moveTo(0, swissCanvas.height - 1);
+      sCtx.lineTo(swissCanvas.width * Math.min(lineProgress / totalLines, 1), swissCanvas.height - 1);
+      sCtx.stroke();
+
+      if (lineProgress < totalLines) {
+        lineProgress += 0.08;
+        requestAnimationFrame(drawSwissGrid);
+      }
+    }
+
+    // Also animate letter-spacing on hover of swiss box
+    const swissBox = document.querySelector(".swiss-ratio-box");
+    const swissTitle = document.querySelector(".stall--design .stall-title");
+
+    if (swissBox && swissTitle) {
+      swissBox.addEventListener("mouseenter", () => {
+        swissTitle.style.letterSpacing = "0.4em";
+        swissTitle.style.transition = "letter-spacing 0.6s ease";
+        lineProgress = 0;
+        drawSwissGrid();
+      });
+      swissBox.addEventListener("mouseleave", () => {
+        swissTitle.style.letterSpacing = "";
+      });
+    }
+    // Auto-run once on load
+    setTimeout(drawSwissGrid, 500);
+  }
+
+  // ---- D. PARTICLE COLLISION CANVAS (IDAN HYBRID block) ----
+  const particleCanvas = document.getElementById("particleCanvas");
+  if (particleCanvas) {
+    const pCtx = particleCanvas.getContext("2d");
+    const W = particleCanvas.width;
+    const H = particleCanvas.height;
+
+    const particles = [];
+    for (let i = 0; i < 18; i++) {
+      particles.push({
+        x: i < 9 ? Math.random() * W * 0.3 : W - Math.random() * W * 0.3,
+        y: Math.random() * H,
+        vx: i < 9 ? (Math.random() * 1.2 + 0.4) : -(Math.random() * 1.2 + 0.4),
+        vy: (Math.random() - 0.5) * 1.0,
+        r: Math.random() * 3 + 1.5,
+        color: i < 9 ? "#00ff66" : "#e60000",
+        team: i < 9 ? "code" : "design"
+      });
+    }
+
+    function drawParticles() {
+      pCtx.clearRect(0, 0, W, H);
+
+      // Center line
+      pCtx.strokeStyle = "rgba(26,26,26,0.15)";
+      pCtx.setLineDash([4, 4]);
+      pCtx.beginPath();
+      pCtx.moveTo(W / 2, 0);
+      pCtx.lineTo(W / 2, H);
+      pCtx.stroke();
+      pCtx.setLineDash([]);
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Bounce off walls
+        if (p.x < p.r || p.x > W - p.r) p.vx *= -1;
+        if (p.y < p.r || p.y > H - p.r) p.vy *= -1;
+
+        // Clamp
+        p.x = Math.max(p.r, Math.min(W - p.r, p.x));
+        p.y = Math.max(p.r, Math.min(H - p.r, p.y));
+
+        // Draw
+        pCtx.beginPath();
+        pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        pCtx.fillStyle = p.color;
+        pCtx.globalAlpha = 0.75;
+        pCtx.fill();
+        pCtx.globalAlpha = 1;
+      });
+
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+  }
+
+  // ---- E. YOGA BREATH TEXT CYCLER ----
+  const breathText = document.getElementById("breathText");
+  const breathPhase = document.getElementById("breathPhase");
+  const breathCycles = [
+    { text: "שאף", phase: "שאף 4 שניות..." },
+    { text: "עצור", phase: "עצור 4 שניות..." },
+    { text: "נשוף", phase: "נשוף 4 שניות..." },
+    { text: "✦", phase: "שאף... עצור... נשוף" }
+  ];
+  let breathIdx = 0;
+  if (breathText) {
+    setInterval(() => {
+      breathIdx = (breathIdx + 1) % breathCycles.length;
+      breathText.textContent = breathCycles[breathIdx].text;
+      if (breathPhase) breathPhase.textContent = breathCycles[breathIdx].phase;
+    }, 2000);
+  }
+
+  // ---- F. TENNIS BALL CLICK — SCORE COUNTER ----
+  const feltBall = document.getElementById("feltBall");
+  const ballScore = document.getElementById("ballScore");
+  const tennisScoreEl = document.getElementById("tennisScore");
+  const scoreNames = ["LOVE", "15", "30", "40", "DEUCE", "ADV", "GAME!"];
+  let hitCount = 0;
+
+  if (feltBall) {
+    feltBall.style.cursor = "pointer";
+    feltBall.parentElement.addEventListener("click", (e) => {
+      e.stopPropagation();
+      hitCount++;
+      playAudio("tennis");
+      feltBall.classList.remove("is-smashing");
+      void feltBall.offsetWidth; // reflow
+      feltBall.classList.add("is-smashing");
+      const scoreIdx = hitCount % scoreNames.length;
+      if (ballScore) ballScore.textContent = hitCount;
+      if (tennisScoreEl) tennisScoreEl.textContent = `${scoreNames[scoreIdx]} · חבטות: ${hitCount}`;
+      feltBall.addEventListener("animationend", () => feltBall.classList.remove("is-smashing"), { once: true });
+    });
+  }
+
+  // ---- G. NONO WAVEFORM — ANIMATE ON CLICK ----
+  const nonoWave = document.getElementById("nonoWave");
+  if (nonoObject && nonoWave) {
+    nonoObject.addEventListener("click", () => {
+      nonoWave.classList.toggle("is-playing");
+    });
+  }
+
+  // ---- H. MANIFESTO READING PROGRESS BAR ----
+  const manifestoScrollbox = document.getElementById("manifestoScrollbox");
+  const readingBar = document.getElementById("readingBar");
+  if (manifestoScrollbox && readingBar) {
+    manifestoScrollbox.addEventListener("scroll", () => {
+      const { scrollTop, scrollHeight, clientHeight } = manifestoScrollbox;
+      const pct = scrollHeight <= clientHeight ? 100 : (scrollTop / (scrollHeight - clientHeight)) * 100;
+      readingBar.style.width = pct.toFixed(1) + "%";
+    });
+  }
+
+  // ---- I. RECALL BLOCK — STAMPING ON CARD CLICK ----
+  if (quarantineCard) {
+    quarantineCard.style.cursor = "crosshair";
+    quarantineCard.addEventListener("click", () => {
+      createDynamicStamp();
+      playAudio("stamp");
+    });
+  }
+
+
 })();

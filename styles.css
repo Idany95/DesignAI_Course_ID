@@ -1626,3 +1626,279 @@ body.state-manifesto .buy-btn {
   }
 }
 
+
+/* ==========================================================================
+   5. RICH LIVE ANIMATIONS — PER BLOCK
+   ========================================================================== */
+
+/* --- IDAN PRIME: Stat Bars --- */
+.stat-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: calc(var(--u) * 1.5);
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-label {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--ink-muted);
+  width: 36px;
+  flex-shrink: 0;
+}
+
+.stat-track {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  width: 0;
+  background: var(--ink);
+  border-radius: 999px;
+  transition: width 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fillBar 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.stat-fill--chaos {
+  background: var(--nono-pink);
+}
+
+@keyframes fillBar {
+  from { width: 0; }
+  to { width: var(--fill, 70%); }
+}
+
+.stat-val {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--ink-muted);
+  width: 20px;
+  text-align: left;
+}
+
+/* Orbiting particles */
+.orbit-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orbit-dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--nono-pink);
+  transform-origin: 0 0;
+}
+
+.orbit-dot--1 {
+  animation: orbit1 7s linear infinite;
+  background: var(--nono-pink);
+}
+
+.orbit-dot--2 {
+  animation: orbit2 11s linear infinite;
+  background: var(--tennis-lime);
+  width: 5px;
+  height: 5px;
+}
+
+.orbit-dot--3 {
+  animation: orbit3 15s linear infinite;
+  background: var(--dean-gold);
+  width: 4px;
+  height: 4px;
+}
+
+@keyframes orbit1 {
+  0%   { transform: rotate(0deg) translateX(60px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+}
+
+@keyframes orbit2 {
+  0%   { transform: rotate(120deg) translateX(85px) rotate(-120deg); }
+  100% { transform: rotate(480deg) translateX(85px) rotate(-480deg); }
+}
+
+@keyframes orbit3 {
+  0%   { transform: rotate(240deg) translateX(105px) rotate(-240deg); }
+  100% { transform: rotate(600deg) translateX(105px) rotate(-600deg); }
+}
+
+/* --- IDAN.TS: Build Badge & Code Cursor --- */
+.build-badge {
+  display: inline-block;
+  color: var(--tennis-lime);
+  font-weight: 800;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  animation: badgePulse 2s ease infinite;
+}
+
+@keyframes badgePulse {
+  0%, 80%, 100% { opacity: 1; }
+  40% { opacity: 0.4; }
+}
+
+.code-cursor {
+  display: inline-block;
+  color: var(--tennis-lime);
+  font-weight: 400;
+  animation: blinkCursor 0.9s step-end infinite;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* --- Swiss: animated canvas label --- */
+#swissGridCanvas {
+  background: #ffffff;
+  height: 36px;
+}
+
+/* --- Hybrid: particle canvas --- */
+#particleCanvas {
+  background: rgba(26, 26, 26, 0.04);
+  height: 44px;
+  border: 1px solid var(--ink);
+}
+
+/* --- Somatic: Yoga breathing orb --- */
+.breath-ring {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2.5px dashed var(--clay);
+  display: grid;
+  place-items: center;
+  position: relative;
+  animation: breathExpand 8s ease-in-out infinite;
+}
+
+@keyframes breathExpand {
+  0%   { transform: scale(1);    border-color: var(--clay);     }
+  25%  { transform: scale(1.45); border-color: #e87040;         }
+  50%  { transform: scale(1.45); border-color: var(--clay);     }
+  75%  { transform: scale(0.75); border-color: #9b3f1c;         }
+  100% { transform: scale(1);    border-color: var(--clay);     }
+}
+
+.breath-inner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--clay);
+  opacity: 0.75;
+  animation: breathInner 8s ease-in-out infinite;
+  transition: opacity 0.5s;
+}
+
+@keyframes breathInner {
+  0%   { transform: scale(1);    opacity: 0.75; }
+  25%  { transform: scale(1.6);  opacity: 0.95; }
+  50%  { transform: scale(1.6);  opacity: 0.9;  }
+  75%  { transform: scale(0.6);  opacity: 0.4;  }
+  100% { transform: scale(1);    opacity: 0.75; }
+}
+
+.breath-text {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 7px;
+  font-weight: 800;
+  color: var(--clay);
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* --- Somatic: Tennis ball click bounce --- */
+#feltBall.is-smashing {
+  animation: tennisSmash 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes tennisSmash {
+  0%   { transform: scale(1) rotate(0deg); }
+  40%  { transform: scale(1.5) rotate(-20deg) translateY(-12px); }
+  70%  { transform: scale(0.8) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* --- Nono: waveform bars --- */
+.waveform-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+  margin: 3px 0;
+}
+
+.waveform-bars span {
+  display: block;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--nono-pink);
+  height: 4px;
+}
+
+.waveform-bars.is-playing span:nth-child(1) { animation: wave 0.7s ease-in-out infinite alternate; }
+.waveform-bars.is-playing span:nth-child(2) { animation: wave 0.5s ease-in-out 0.1s infinite alternate; }
+.waveform-bars.is-playing span:nth-child(3) { animation: wave 0.9s ease-in-out 0.05s infinite alternate; }
+.waveform-bars.is-playing span:nth-child(4) { animation: wave 0.6s ease-in-out 0.15s infinite alternate; }
+.waveform-bars.is-playing span:nth-child(5) { animation: wave 0.8s ease-in-out 0.08s infinite alternate; }
+
+@keyframes wave {
+  from { height: 3px; }
+  to   { height: 16px; }
+}
+
+/* --- Recall: glitch on fake card --- */
+.quarantine-card {
+  animation: glitchCard 7s infinite;
+}
+
+@keyframes glitchCard {
+  0%, 94%, 100% { transform: none; filter: none; }
+  95% { transform: translateX(-3px); filter: hue-rotate(90deg); }
+  96% { transform: translateX(3px); filter: hue-rotate(-90deg); }
+  97% { transform: translateX(-2px) skewX(1deg); filter: none; }
+  98% { transform: none; }
+}
+
+/* --- Manifesto: reading progress bar --- */
+.reading-progress-track {
+  height: 3px;
+  background: rgba(26, 26, 26, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.reading-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--rhino);
+  border-radius: 999px;
+  transition: width 0.15s linear;
+}
+

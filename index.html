@@ -100,11 +100,29 @@
           </div>
         </div>
 
-        <div class="stall-spec-table num">
-          <div class="spec-cell"><span class="lbl">CLASS / סיווג:</span> <strong>סופרפוזיציה</strong></div>
-          <div class="spec-cell"><span class="lbl">POWER / עוצמה:</span> <strong>100% אנושי</strong></div>
-          <div class="spec-cell"><span class="lbl">PASSIVE / פסיבי:</span> <strong>גריד 8px מודולרי</strong></div>
-          <div class="spec-cell"><span class="lbl">SPECIAL / מיוחד:</span> <strong>שינוי צורה מלא</strong></div>
+        <!-- Animated Stat Bars -->
+        <div class="stat-bars" aria-hidden="true">
+          <div class="stat-row">
+            <span class="stat-label num">SW ENG</span>
+            <div class="stat-track"><div class="stat-fill" style="--fill:92%"></div></div>
+            <span class="stat-val num">92</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label num">UI/UX</span>
+            <div class="stat-track"><div class="stat-fill" style="--fill:88%"></div></div>
+            <span class="stat-val num">88</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label num">CHAOS</span>
+            <div class="stat-track"><div class="stat-fill stat-fill--chaos" style="--fill:77%"></div></div>
+            <span class="stat-val num">77</span>
+          </div>
+        </div>
+        <!-- Orbiting particles -->
+        <div class="orbit-container" aria-hidden="true">
+          <span class="orbit-dot orbit-dot--1"></span>
+          <span class="orbit-dot orbit-dot--2"></span>
+          <span class="orbit-dot orbit-dot--3"></span>
         </div>
 
         <div class="stall-action">
@@ -129,17 +147,18 @@
           <h2 class="stall-title">IDAN.TS — מהנדס התוכנה</h2>
 
           <!-- Interactive Code Package -->
-          <div class="carton-package">
+          <div class="carton-package" id="codePackage">
             <div class="carton-tape">
-              <span>TYPESCRIPT</span> · <span>0% COMPROMISE</span> · <span>8px BASELINE</span>
+              <span>TYPESCRIPT</span> · <span>0% COMPROMISE</span> · <span class="build-badge" id="buildBadge">● BUILD PASSING</span>
             </div>
             <pre class="carton-code num"><code><span class="c-k">const</span> <span class="c-v">engineer</span>: <span class="c-t">IdanArchetype</span> = {
   class: <span class="c-s">"Software Engineer"</span>,
   architecture: <span class="c-s">"Clean & Scalable"</span>,
   deterministic: <span class="c-k">true</span>,
   superpower: <span class="c-s">"Coding with a designer eye"</span>
-};</code></pre>
+};<span class="code-cursor">█</span></code></pre>
           </div>
+          <canvas id="matrixCanvas" width="350" height="55" style="display:none;border-radius:4px;margin-bottom:8px;"></canvas>
 
           <ul class="ingredient-list">
             <li><strong>איכות הסדר:</strong> ארכיטקטורה נקייה, ביצועים חדים, שום באג לא נסלח.</li>
@@ -180,6 +199,9 @@
             </div>
           </div>
 
+          <!-- Animated grid-lines canvas for Swiss block -->
+          <canvas id="swissGridCanvas" width="320" height="40" style="border:1px solid var(--ink);border-radius:4px;margin-bottom:8px;display:block;width:100%;"></canvas>
+
           <ul class="ingredient-list">
             <li><strong>סדר מודרניסטי אמיתי:</strong> כל מרווח, יחס וגופן נבחרו בכוונה תחילה.</li>
             <li><strong>משמעת שוויצרית:</strong> היררכיה חדה, טיפוגרפיה אחראית, שום פיקסל אינו מקרי.</li>
@@ -217,6 +239,9 @@
             </div>
             <input type="range" id="boutiqueSlider" min="0" max="100" value="50" step="1" aria-label="סליידר מיקס היברידי" />
           </div>
+
+          <!-- Particle collision canvas -->
+          <canvas id="particleCanvas" width="320" height="48" style="border-radius:6px;margin-bottom:6px;display:block;width:100%;"></canvas>
 
           <!-- Dynamic Ingredient Cocktail -->
           <div class="cocktail-card" id="cocktailCard">
@@ -263,12 +288,12 @@
             <!-- 1. Felt Tennis Ball with Score -->
             <div class="grocery-item item--tennis" id="tennisObject" title="כדור טניס אמיתי: לחץ לחבטה ברשת! (Web Audio API)">
               <div class="grocery-badge">150 KM/H</div>
-              <div class="felt-ball">
+              <div class="felt-ball" id="feltBall">
                 <span class="ball-seam-arc"></span>
-                <span class="ball-label num">DEUCE</span>
+                <span class="ball-label num" id="ballScore">0</span>
               </div>
               <strong>כדור טניס מורשה</strong>
-              <small class="num">אהבה–15 · חבטה ברשת</small>
+              <small class="num" id="tennisScore">לחץ לחבטה! | ניקוד: 0</small>
             </div>
 
             <!-- 2. Olivia Dean Soul Concert Ticket -->
@@ -289,6 +314,9 @@
               <div class="wristband-tag">
                 <span>נונו · לא פלייליסט</span>
               </div>
+              <div class="waveform-bars" id="nonoWave" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
               <strong>צמיד מועדונים זרחני</strong>
               <small>שוברת את החדר והגריד</small>
             </div>
@@ -307,11 +335,12 @@
             <!-- 5. Yoga Breath Clay Ring -->
             <div class="grocery-item item--yoga" id="yogaObject" title="יוגה: נשימת פראניאמה">
               <div class="grocery-badge">PRANAYAMA</div>
-              <div class="breath-ring">
+              <div class="breath-ring" id="breathOrb">
                 <span class="breath-inner"></span>
+                <span class="breath-text" id="breathText">שאף</span>
               </div>
               <strong>מעגלי נשימה מחימר</strong>
-              <small>א-סימטריה אנושית חיה</small>
+              <small id="breathPhase">שאף... עצור... נשוף</small>
             </div>
 
             <!-- 6. Moon Heritage Sticker -->
@@ -398,7 +427,8 @@
           <span class="boutique-label">CHARACTER 06 // DOSSIER PHILOSOPHIQUE</span>
           <h2 class="stall-title">מסת העמדה הרשמית: 332 מילים</h2>
 
-          <div class="manifesto-scrollbox">
+          <div class="reading-progress-track"><div class="reading-progress-bar" id="readingBar"></div></div>
+          <div class="manifesto-scrollbox" id="manifestoScrollbox">
             <!-- THE EXACT 332-WORD ESSAY -->
             <div class="essay-text">
               <p>
